@@ -1762,8 +1762,8 @@ rmerge.list<-function(dat_lis,all=T,verbose=T){
 celltr<-function(clusters_list,runname="",inpath='~/Dropbox/SHARED/tools/Data_to_load_CellFET/',outpath=getwd(),selection=F){ #inpath="~/Dropbox/SHARED/tools/Data_to_load_CellFET",
 cat('\tNOTE:\tclusters_list only ENSG ids currently supported')
 cat("\tCell background is the genes with one2one human orthologous of mice genes used to build the list of cell class enriched genes by Zeisel et al 2015(Science)\n")
-  library(MetaDE)
-  library('parallel')
+  # library(MetaDE)
+  # library('parallel')
 
   ###load data
  Load(paste(inpath,"/HUMQb.Rdata",sep=""))            #"HUMQb" human ENSid orthologous genes of mice background genes
