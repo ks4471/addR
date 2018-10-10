@@ -1,6 +1,11 @@
 ## addR
-updated version of R.helper.R, contains quality of life wrappers for omics data analysis and visualisation
-includes functions to perform cell type enrichment *celltr()*, de-novo mutation enrichment *dnmr()*, CMAP drug database enrichment *cmapr()*, wrapper for *webgestaltR* functional enrichment database and many others.
+Updated version of R.helper.R, contains quality of life wrappers for a number of Bioinformatics tools - designed to streamline omics data analysis and visualisation. Functions include principal component factor analysis, covariate influence, hierarchical clustering, linear modelling and over-representation tests.
+
+Also includes custom functions to perform gene set enrichment tests using datasets from publicly available repositories
+- cell type enrichment *celltr()*-
+- de-novo mutation enrichment *dnmr()*
+- CMAP drug database enrichment *cmapr()*
+- wrapper for *webgestaltR* functional enrichment database and many others.
 
 Please see other repositories in on this account for details and instructions
 
