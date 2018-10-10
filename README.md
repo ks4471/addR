@@ -1,5 +1,5 @@
 ## addR
-Updated version of R.helper.R, contains quality of life wrappers for a number of Bioinformatics tools - designed to streamline omics data analysis and visualisation. Functions include principal component factor analysis, covariate influence, hierarchical clustering, linear modelling and over-representation tests.
+Collection of quality of life wrappers for a number of Bioinformatics tools - designed to streamline omics data quality control, analysis and visualisation. Functions include principal component factor analysis, covariate influence, hierarchical clustering, linear modelling and over-representation tests.
 
 Also includes custom functions to perform gene set enrichment tests using datasets from publicly available repositories
 - cell type enrichment *celltr()*
