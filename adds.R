@@ -4302,32 +4302,35 @@ annot.combine<-function(expr_mat,annot_mat,annot_from,annot_to,combine_method='m
 
 
   if(nrow(unic)!=nrow(expr_out)){
+    print(1)
       udup=unlist(unique(dupl[,annot_to,drop=F]))
-  if(length(udup)>1){
-    cat('\n\tmerge',length(udup),'genes, using ',combine_method,' on all mapped probes :\n')
-#   idup=udup[5]
-    dupmed=list()
-    k=1
-    for(idup in udup){
-      humpty=expr_mat[as.character(dupl[dupl[,annot_to]==idup,annot_from]),]
+          print(udup)
+    if(length(udup)>1){
+      print(2)
+      cat('\n\tmerge',length(udup),'genes, using ',combine_method,' on all mapped probes :\n')
+  #   idup=udup[5]
+      dupmed=list()
+      k=1
+      for(idup in udup){
+        humpty=expr_mat[as.character(dupl[dupl[,annot_to]==idup,annot_from]),]
 
-      if(combine_method=='median'){holder=apply(humpty,2,median,na.rm=T)}
-      if(combine_method=='mean'){holder=apply(humpty,2,mean,na.rm=T)}
-      if(combine_method=='sum'){holder=apply(humpty,2,sum,na.rm=T)}
-      
-      dupmed[[idup]]=holder
-#     dumpty=cor(humpty,holder)
-#     diag(dumpty)=NA
-#     dumpty=c(min(dumpty,na.rm=T),max(dumpty,na.rm=T),length(dumpty))
-#     cat('\t\t\t',paste(round(dumpty,digits=2),collapse=",\t"),'\n')
-      k=lcount(k,length(udup))
+        if(combine_method=='median'){holder=apply(humpty,2,median,na.rm=T)}
+        if(combine_method=='mean'){holder=apply(humpty,2,mean,na.rm=T)}
+        if(combine_method=='sum'){holder=apply(humpty,2,sum,na.rm=T)}
+        
+        dupmed[[idup]]=holder
+  #     dumpty=cor(humpty,holder)
+  #     diag(dumpty)=NA
+  #     dumpty=c(min(dumpty,na.rm=T),max(dumpty,na.rm=T),length(dumpty))
+  #     cat('\t\t\t',paste(round(dumpty,digits=2),collapse=",\t"),'\n')
+        k=lcount(k,length(udup))
+      }
+      dupfin=t(as.data.frame(dupmed))
+
+        rownames(dupfin)=names(dupmed)
+      expr_out=rbind(expu,dupfin)
+
     }
-    dupfin=t(as.data.frame(dupmed))
-
-      rownames(dupfin)=names(dupmed)
-    expr_out=rbind(expu,dupfin)
-
-  }
   }
 
     cat('\n\tfinal output contains',nrow(expr_out),' genes, ',round(nrow(expr_out)/nrow(expr_mat),digits=2)*100,'% of original input\n')
