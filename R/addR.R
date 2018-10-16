@@ -1,7 +1,89 @@
-
+#https://github.com/RamsinghLab/ozymandias
+# People rarely do what they know to be right; they do what is convenient, then repent.. Therefore, if you want people (yourself, for example) to do the right thing, make it the most convenient thing
 
 # ####============================================================================================================
+# ##  wgcna clustering  ----------------------
+# #╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╔╦╦╗
+# options(stringsAsFactors=F);library(colorout);rm(list=ls());ls()#╚═╣║ ╚╣║¯\_(•_•)_/¯║╚╣╔╣╔╣║║║║╚╣
+# options(menu.graphics=F)  #╦═╩╬╝╚╬╬╚╗═╚╩╗═╩╠╬╝╔═╗╬╚║╣══╣╦╬╬╗╠╔╗╔╣╣╝╝╣╠╔╠╚╔╔═╦╩╬╣╦╣╔╚╬╦╣╩╬╚╩╗╣╝╚╠╣
+# source('~/Dropbox/PROJ/adds/adds.R') #╗╣╠═╩╠╣╠╬═╩╬╗╩╩║═╚╣╠╣╠╗╗╠╔║╩╬╠╝╣╬╔╬╬╚╦╝╔╗╩╠╚╝╠═╝╝╦╔═╚╠╝╣║ ║
+# #╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚══╩═╩╩══╩╩═╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝ ╚═╩══╩═╩══╩╝╩═╩╝╚═╩═╩╩═╝
 
+####============================================================================================================
+##  signed v unsigned GTEX7 beta10 ----------------------
+#╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╔╦╦╗
+# options(stringsAsFactors=F);library(colorout);rm(list=ls());ls()#╚═╣║ ╚╣║¯\_(•_•)_/¯║╚╣╔╣╔╣║║║║╚╣
+# options(menu.graphics=F)  #═╦╩╬╝╚╬╬╚╗═╚╩╗═╩╠╬╝╔╚╗╬╚║╣══╣╦╬╬╗╠╔╗╔╣╣╝╝╣╠╔╠╚╔╔═╦╩╬╣╦╣╔╚╬╦╣╩╬╚╩╗╣╝╚╠╣
+# library('adds') #╔╦╣═╩╚╣║╔╔╣╦═║║╔╗║╔╚╔╣╩╚╚╦╣║╩╔╦║║ ╚╩╣╚╚╣║╣╚╩╔╦╩╚╦╚╩╣╬╝╚╗╔╝╬╚╝ ╔╣═╦╦╦╩╠╔╠╗╔╝╚═╗╩║
+# devtools::install_github("ks471/addR") #╗╣╠═╩╠╣╠╬═╚╬╗╩╩═║╚╝╝╣╠╗╗╠╔║╩╬╠╝╣╬╔╬╬╚╦╝╔╗╩╠╚╝╠═╝╝╦╔═╚╠╝╣║
+#╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩╩═╝
+
+
+#### <*=-=*> ####
+
+####======================================================================================================
+##  adds functions : helper v2 --------------------------------
+##   + standard vocabulary (attempt at anyhow)
+##   + semblance of order
+#╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╔╦╦╗
+# options(stringsAsFactors=F);library(colorout);rm(list=ls());ls()#╚═╣║ ╚╣║¯\_(•_•)_/¯║╚╣╔╣╔╣║║║║╚╣
+# options(menu.graphics=FALSE);library(adds)#╣═╩╚╣║╔╔╣╦═║║╔╚║╔╚╔╣╩╚╚╦╣║╩╔╦║║ ╚╩╣╚╚╣║╣╚╩╔╦╩╚╦╚╩╣
+#╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩╩═╝
+
+####============================================================================================================
+##  signed v unsigned GTEX7 beta10 ----------------------
+#╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╔╦╦╗
+# options(stringsAsFactors=F);library(colorout);rm(list=ls());ls()#╚═╣║ ╚╣║¯\_(•_•)_/¯║╚╣╔╣╔╣║║║║╚╣
+# options(menu.graphics=F)  #═╦╩╬╝╚╬╬╚╗═╚╩╗═╩╠╬╝╔╚╗╬╚║╣══╣╦╬╬╗╠╔╗╔╣╣╝╝╣╠╔╠╚╔╔═╦╩╬╣╦╣╔╚╬╦╣╩╬╚╩╗╣╝╚╠╣
+# library(R.helper) #╣═╩╚╣║╔╔╣╦═║║╔╗║╔╚╔╣╩╚╚╦╣║╩╔╦║║ ╚╩╣╚╚╣║╣╚╩╔╦╩╚╦╚╩╣╬╝╚╗╔╝╬╚╝ ╔╣═╦╦╦╩╠╔╠╗╔╝╚═╗╩║
+# source('/Data/ks/adds.R')   # ╠╚╚╝═╝ ╚╬╗╦═╠║═╔╣═╬╠╝═║╚╣╦═╚╦╦╣╣╝╝╦╣╦╦╔║║╝╝═║═║╗╣╗╔╠╩╝═╗╝║╬═╔╔╔╣╚╩╣
+# source('~/Dropbox/PROJ/adds/adds.R') #╗╣╠═╩╠╣╠╬═╚╬╗╩╩═║╚╝╝╣╠╗╗╠╔║╩╬╠╝╣╬╔╬╬╚╦╝╔╗╩╠╚╝╠═╝╝╦╔═╚╠╝╣║ ║
+#╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩╩═╝
+
+
+####■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+##
+#devtools::install_github("ks471/R.helper")
+#
+
+## devtools appears to be deprecated..
+# usethis::create_package('~/Dropbox/PROJ/adds/github/spatiotemp/')
+# Load('~/Dropbox/PROJ/adds/github/spatiotemp/data/spatiotemp_db.GSE25219_rma_pli_dabg.sampid.lm_sva_clust.Rdata')
+# cd('~/Dropbox/PROJ/adds/github/spatiotemp/')
+# usethis::use_data(spatiotemp_db)    ## save to wd, create_package() will change the directory
+
+
+##
+#/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+####■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+# Format number as fixed width, with leading zeros [duplicate]
+# There are several solutions to this.
+# One of them is to use sprintf. This uses C style formatting codes embedded in a character string to indicate the format of any other arguments passed to it. For example, the formatting code %3d means format a number as integer of width 3:
+
+# a <- seq(1,101,25)
+# sprintf("name_%03d", a)
+# [1] "name_001" "name_026" "name_051" "name_076" "name_101"
+# Another is formatC and paste:
+
+# paste("name", formatC(a, width=3, flag="0"), sep="_")
+# [1] "name_001" "name_026" "name_051" "name_076" "name_101"
+
+
+
+#╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═╬═
+
+#gsub("[^A-Za-z0-9 _.,!]", "", humpty$title)  ## anything other than alnum & selected punctuation
+
+# mtext("(c)",side=3,line=-1.5, at=par("usr")[1]+0.05*diff(par("usr")[1:2]),cex=1.2)      #  places text one-twentieth of the way across the "x-axis"
+
+# R smallest number 9.88131291682493e-324
+###•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•###
+###•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•###
+# radiant power - controlled, loving, compassionate, unyielding
 
 colmix=c(
 "#0072B2"
@@ -133,23 +215,23 @@ colbw=c("#ffffff","#f0f0f0","#d9d9d9","#bdbdbd","#969696","#737373","#525252","#
 Library<-function(pkg_name='',cran=F){
 ##  check for package existence, if not install
 ##  only for packages on cran/bioconductor
-  options(menu.graphics=FALSE)
+	options(menu.graphics=FALSE)
 
-  if(pkg_name==''){stop('no package name specified')}
-  if(length(pkg_name)>1){stop('one package name only')}
-  
-  if(!(pkg_name %in% rownames(installed.packages()))){
-    if(!cran){
-      cat('\tbioconductor install :  ',pkg_name,'\n')
+	if(pkg_name==''){stop('no package name specified')}
+	if(length(pkg_name)>1){stop('one package name only')}
+	
+	if(!(pkg_name %in% rownames(installed.packages()))){
+		if(!cran){
+			cat('\tbioconductor install :  ',pkg_name,'\n')
       source("https://bioconductor.org/biocLite.R")
-      biocLite(pkg_name,suppressAutoUpdate=T,suppressUpdates=T)
-    }
-    if(cran){
-      cat('\tcran install :  ',pkg_name,'\n')
-      install.packages(pkg_name)
-    }
-  }
-  library(pkg_name,character.only=T,quietly=T)
+			biocLite(pkg_name,suppressAutoUpdate=T,suppressUpdates=T)
+		}
+		if(cran){
+			cat('\tcran install :  ',pkg_name,'\n')
+			install.packages(pkg_name)
+		}
+	}
+	library(pkg_name,character.only=T,quietly=T)
 }
 
 
@@ -158,37 +240,37 @@ install.dependencies<-function(){
 ##  USE : re-install packages commonly used by adds.R functions, particularly important for github ones. Library() can handle bioconductor / cran
 ##  NOTE: example error below means the mirror used is not functional/unavailable, try another..
 
-  options(menu.graphics=FALSE)
-  system('git clone https://github.com/jalvesaq/colorout.git')
-  system('sudo R CMD INSTALL colorout')
-  library(colorout)
+	options(menu.graphics=FALSE)
+	system('git clone https://github.com/jalvesaq/colorout.git')
+	system('sudo R CMD INSTALL colorout')
+	library(colorout)
 
   devtools::install_github("hadley/devtools")
-  Library('devtools')
-  Library('gplots')
+	Library('devtools')
+	Library('gplots')
 
 ##  installing WGCNA - requires dependencies first - simplest is to use instruction as per website :
 ##  http://labs.genetics.ucla.edu/horvath/CoexpressionNetwork/Rpackages/WGCNA/#cranInstall
-  source("http://bioconductor.org/biocLite.R") 
-  biocLite(c("AnnotationDbi", "impute", "GO.db", "preprocessCore")) 
-  Library("WGCNA")
+	source("http://bioconductor.org/biocLite.R") 
+	biocLite(c("AnnotationDbi", "impute", "GO.db", "preprocessCore")) 
+	Library("WGCNA")
   library(devtools)
   install_github(repo="juanbot/km2gcn/km2gcn")    ## re-clustering WGCNA modules package 
 
-  Library('MetaDE')
-  Library('mixtools')
-  Library('pamr')
-  Library("psych")
-  Library('corrplot')
+	Library('MetaDE')
+	Library('mixtools')
+	Library('pamr')
+	Library("psych")
+	Library('corrplot')
 
-  Library('gplots')
-  Library('ggplot2')
-  Library('pvclust')
-  Library('dendextend')
+	Library('gplots')
+	Library('ggplot2')
+	Library('pvclust')
+	Library('dendextend')
 
-  Library('minet')
-  Library('limma')
-  Library('biomaRt')
+	Library('minet')
+	Library('limma')
+	Library('biomaRt')
 
 
   install_github("vqv/ggbiplot")
@@ -266,8 +348,8 @@ lcount<-function(k,length){
 
 lprogr<-function(xvar,xful,bars=F){
   dummy=which(xful==xvar)
-  if(!bars){(cat('\t',xvar,'\t',dummy,' of ',length(xful),'\n'))}
-  if(bars){cat('\n\t========================    ',xvar,dummy,'of',length(xful),'    ========================\n')}
+	if(!bars){(cat('\t',xvar,'\t',dummy,' of ',length(xful),'\n'))}
+	if(bars){cat('\n\t========================    ',xvar,dummy,'of',length(xful),'    ========================\n')}
   return(invisible(dummy))
 }
 
@@ -334,8 +416,8 @@ overlap<-function(A,B,n=5){
 ##  modified to run only for unique A & B, otherwise numbers can be misleading
     unA=unique(A)
     unB=unique(B)
-      cat('\n\tlength(A) :  ',length(A),'\t unique(A)  :  ',length(unA),' \t',round(length(unA)/length(A),digits=3)*100,'%\n')
-      cat('\tlength(B) :  ',length(B),'\t unique(B)  :  ',length(unB),' \t',round(length(unB)/length(B),digits=3)*100,'%','\n')
+	    cat('\n\tlength(A) :  ',length(A),'\t unique(A)  :  ',length(unA),' \t',round(length(unA)/length(A),digits=3)*100,'%\n')
+	    cat('\tlength(B) :  ',length(B),'\t unique(B)  :  ',length(unB),' \t',round(length(unB)/length(B),digits=3)*100,'%','\n')
 
 
     both=union(unA, unB)
@@ -348,9 +430,9 @@ overlap<-function(A,B,n=5){
     exA=unA[!(unA%in%intr)]
     exB=unB[!(unB%in%intr)]
 
-    cat('\n\t',length(intr),'\tinA & inB :\t',paste(sort(intr[1:n])       ,collapse=',  '),'\n')
-    cat('\t',length(exA),'\tinA  notB :\t', paste(sort(exA[1:n]),collapse=',  '),'\n')
-    cat('\t',length(exB),'\tinB  notA :\t', paste(sort(exB[1:n]),collapse=',  '),'\n')
+    cat('\n\t',length(intr),'\tinA & inB :\t',paste(sort(intr[1:n])			  ,collapse=',  '),'\n')
+    cat('\t',length(exA),'\tinA  notB :\t',	paste(sort(exA[1:n]),collapse=',  '),'\n')
+    cat('\t',length(exB),'\tinB  notA :\t',	paste(sort(exB[1:n]),collapse=',  '),'\n')
     return(invisible(list(inter=intr,union=both,ina=exA,inb=exB)))
 
 }
@@ -366,9 +448,9 @@ Table<-function(dat_mat,thresh=NA,sort=T,decreasing=T){
   }
 
   if(ncol(dummy)==1){
-    holder=as.data.frame(rownames(dummy))
-    holder$count=dummy[,1]
-    dummy=holder
+  	holder=as.data.frame(rownames(dummy))
+  	holder$count=dummy[,1]
+  	dummy=holder
   }
   colnames(dummy)=c('entry','count')
   dummy$fraction=round(dummy$count/sum(as.numeric(dummy$count)),digits=3)
@@ -383,22 +465,22 @@ Head<-function(data_obj,nlist=1,ncol=1:5,nrow=1:10){
   prev=""
 
   if(class(data_obj)=="list"){
-    if(length(names(data_obj))<50){
-      cat("\t\tlist contains",length(names(data_obj)),"objects:\n")
-      cat("\t\t\t",as.matrix(names(data_obj)),"\n\n",sep="   ")
-      cat("\t\tlist[[",nlist,"]] contains ",class((data_obj[[1]]))," :",sep="")
+  	if(length(names(data_obj))<50){
+	    cat("\t\tlist contains",length(names(data_obj)),"objects:\n")
+	    cat("\t\t\t",as.matrix(names(data_obj)),"\n\n",sep="   ")
+	    cat("\t\tlist[[",nlist,"]] contains ",class((data_obj[[1]]))," :",sep="")
 
-      prev=paste("list[[",nlist,"]] contains :",sep="")
-      data_obj=data_obj[[nlist]]
+	    prev=paste("list[[",nlist,"]] contains :",sep="")
+	    data_obj=data_obj[[nlist]]
     }
 
-    if(length(names(data_obj))>50){
-      cat("\t\tlist contains",length(names(data_obj)),"objects, first 50:\n")
-      cat("\t\t\t",as.matrix(names(data_obj)[1:min(50,length(names(data_obj)))]),"...\n\n",sep="   ")
-      cat("\t\tlist[[",nlist,"]] contains ",class((data_obj[[1]]))," :",sep="")
+  	if(length(names(data_obj))>50){
+	    cat("\t\tlist contains",length(names(data_obj)),"objects, first 50:\n")
+	    cat("\t\t\t",as.matrix(names(data_obj)[1:min(50,length(names(data_obj)))]),"...\n\n",sep="   ")
+	    cat("\t\tlist[[",nlist,"]] contains ",class((data_obj[[1]]))," :",sep="")
 
-      prev=paste("list[[",nlist,"]] contains :",sep="")
-      data_obj=data_obj[[nlist]]
+	    prev=paste("list[[",nlist,"]] contains :",sep="")
+	    data_obj=data_obj[[nlist]]
     }
   }
 
@@ -414,7 +496,7 @@ Head<-function(data_obj,nlist=1,ncol=1:5,nrow=1:10){
     cat("\t\tis.numeric :",is.numeric(data_obj))
  
     if(is.numeric(data_obj)){
-      cat('\tmin=',min(data_obj,na.rm=T),'max=',max(data_obj,na.rm=T),'\n')
+    	cat('\tmin=',min(data_obj,na.rm=T),'max=',max(data_obj,na.rm=T),'\n')
     }
     cat('\n')
   }
@@ -426,7 +508,7 @@ Head<-function(data_obj,nlist=1,ncol=1:5,nrow=1:10){
     cat("\t\tis.numeric :",is.numeric(data_obj))
 
     if(is.numeric(data_obj)){
-      cat('\tmin=',min(data_obj,na.rm=T),'max=',max(data_obj,na.rm=T),'\n')
+    	cat('\tmin=',min(data_obj,na.rm=T),'max=',max(data_obj,na.rm=T),'\n')
     }
     cat('\n')
   }
@@ -436,7 +518,7 @@ Head<-function(data_obj,nlist=1,ncol=1:5,nrow=1:10){
     str(data_obj)
     cat("\n\tis.numeric :",is.numeric(data_obj))
     if(is.numeric(data_obj)){
-      cat('\tmin=',min(data_obj,na.rm=T),'max=',max(data_obj,na.rm=T),'\n')
+    	cat('\tmin=',min(data_obj,na.rm=T),'max=',max(data_obj,na.rm=T),'\n')
     }
     cat('\n')
   }
@@ -447,11 +529,11 @@ Head<-function(data_obj,nlist=1,ncol=1:5,nrow=1:10){
 
 dat.class<-function(dat_mat,verbose=F){
   if(is.vector(dat_mat)){dat_class='vector'}
-  if(is.matrix(dat_mat)){dat_class=apply(dat_mat,2,class)}
-  if(is.data.frame(dat_mat)){dat_class=unlist(lapply(dat_mat,class))}
-  if(is.list(dat_mat)&!is.data.frame(dat_mat)){stop('input is a list')}
-  if(verbose){print(Table(dat_class))}
-  return((dat_class))
+	if(is.matrix(dat_mat)){dat_class=apply(dat_mat,2,class)}
+	if(is.data.frame(dat_mat)){dat_class=unlist(lapply(dat_mat,class))}
+	if(is.list(dat_mat)&!is.data.frame(dat_mat)){stop('input is a list')}
+	if(verbose){print(Table(dat_class))}
+	return((dat_class))
 }
 
 
@@ -860,19 +942,19 @@ Plot<-function(xdat,ydat='',pch=20,col=rgb(0, 0, 0,alpha=0.2),abline=F,frame.plo
 plot.new()
 start_par=par()
   par(oma=c(0, 0, 0, 0), mar=c(4, 4, 1, 0), new=TRUE)
-  options(warn=-1)
-  if(is.character(ydat)&ydat==''){yplot=F}
-  if(!is.character(ydat)){yplot=T}
-  # if(xlim==''){xlim_dat=c(floor(min(xdat)),ceiling(max(xdat)))}
-  # if(yplot){if(ylim==''){ylim_dat=c(floor(min(xdat)),ceiling(max(xdat)))}}
-  options(warn=0)
+	options(warn=-1)
+	if(is.character(ydat)&ydat==''){yplot=F}
+	if(!is.character(ydat)){yplot=T}
+	# if(xlim==''){xlim_dat=c(floor(min(xdat)),ceiling(max(xdat)))}
+	# if(yplot){if(ylim==''){ylim_dat=c(floor(min(xdat)),ceiling(max(xdat)))}}
+	options(warn=0)
 
 # cat('\t',yplot,col,xlim,ylim,'\n')
 # cat('\t',yplot,col,pch,frame.plot,'\n')
 
-  if(!yplot){plot(x=xdat,pch=16,col=rgb(0, 0, 0,alpha=0.2),frame.plot=F,...)}
-  if(yplot){plot(x=xdat,y=ydat,pch=16,col=rgb(0, 0, 0,alpha=0.2),frame.plot=F,...)}
-  if(line45deg){abline(coef=c(0,1),lty=2,col='grey60')}
+	if(!yplot){plot(x=xdat,pch=16,col=rgb(0, 0, 0,alpha=0.2),frame.plot=F,...)}
+	if(yplot){plot(x=xdat,y=ydat,pch=16,col=rgb(0, 0, 0,alpha=0.2),frame.plot=F,...)}
+	if(line45deg){abline(coef=c(0,1),lty=2,col='grey60')}
   if(length(labels)>1){text(xdat,ydat,labels=rownames(xdat))}
   options(warn=-1)
       par(start_par)
@@ -1075,41 +1157,41 @@ nlaps=list()
 
 
 pca<-function(dat_mat,check_scaled=T,n_pcs=5,verbose=F,...){
-##  INPUT - dat_mat: rows - genes, columns - samples
-##  PARAM - n_pcs - number of PCs to use, default(n_pcs=5), if n_pcs=="" auto-calculate optimum number
-##  PARAM - check_scale - if input is pre-scaled, PCA will reflect the scaled dimension tie if columns scaled - PCA wrt to columns
-##  NOTE  - function used : "prcomp(t(dat_mat),scale=T,center=T)
-  if(check_scaled){
-    if(verbose){cat('\tcheck if data is already scaled (row or column) - affects PCA\n')}
-    humpty=apply(dat_mat,1,sd,na.rm=T)
-    dumpty=apply(dat_mat,2,sd,na.rm=T)
-    if(sum(humpty)==length(humpty)){stop('data already scaled by row, set "check_scale=F" to ignore')}
-    if(sum(dumpty)==length(dumpty)){stop('data already scaled by column, set "check_scale=F" to ignore')}
-    if(sum(dumpty)!=length(dumpty)&sum(humpty)!=length(humpty)){if(verbose){cat('\t + input data is not scaled\n')}}
-  }
+##  INPUT	- dat_mat: rows - genes, columns - samples
+##  PARAM	- n_pcs - number of PCs to use, default(n_pcs=5), if n_pcs=="" auto-calculate optimum number
+##  PARAM	- check_scale - if input is pre-scaled, PCA will reflect the scaled dimension tie if columns scaled - PCA wrt to columns
+##  NOTE	- function used : "prcomp(t(dat_mat),scale=T,center=T)
+	if(check_scaled){
+		if(verbose){cat('\tcheck if data is already scaled (row or column) - affects PCA\n')}
+		humpty=apply(dat_mat,1,sd,na.rm=T)
+		dumpty=apply(dat_mat,2,sd,na.rm=T)
+		if(sum(humpty)==length(humpty)){stop('data already scaled by row, set "check_scale=F" to ignore')}
+		if(sum(dumpty)==length(dumpty)){stop('data already scaled by column, set "check_scale=F" to ignore')}
+		if(sum(dumpty)!=length(dumpty)&sum(humpty)!=length(humpty)){if(verbose){cat('\t + input data is not scaled\n')}}
+	}
 
-  options(warn=-1)
-    if(n_pcs==''){
-      if(verbose){cat('\t\tdetermine optimum number factors to extract (very time cosuming)\n')}
+	options(warn=-1)
+		if(n_pcs==''){
+			if(verbose){cat('\t\tdetermine optimum number factors to extract (very time cosuming)\n')}
 
-    # Determine Number of Factors to Extract
-    Library('nFactors')
-    ev=eigen(cor(dat_mat)) # get eigenvalues
-    ap=parallel(subject=nrow(dat_mat),var=ncol(dat_mat),rep=10,cent=.05)
-    nS=nScree(x=ev$values, aparallel=ap$eigen$qevpea)
-    plotnScree(nS)
+		# Determine Number of Factors to Extract
+		Library('nFactors')
+		ev=eigen(cor(dat_mat)) # get eigenvalues
+		ap=parallel(subject=nrow(dat_mat),var=ncol(dat_mat),rep=10,cent=.05)
+		nS=nScree(x=ev$values, aparallel=ap$eigen$qevpea)
+		plotnScree(nS)
 
-    }
-  options(warn=0)
+		}
+	options(warn=0)
 
-  pcs=prcomp(t(dat_mat),scale=T,center=T)
+	pcs=prcomp(t(dat_mat),scale=T,center=T)
 ##  calculate pcs scaled by rotaion (prcomp - PCs have randomly assigned directions)
   pc=t(t(pcs$x)*apply(pcs$rotation,2,function(x){sign(x[which.max(abs(x))])}))
 
-  pcstat=round(as.matrix(summary(pcs)$importance["Proportion of Variance",1:n_pcs]),digits=2)*100
-      colnames(pcstat)="PCA variance explained %"
-      if(verbose){print(pcstat)}
-  return(invisible(list(pcs=pc,pca=pcs,pcstat=pcstat)))
+	pcstat=round(as.matrix(summary(pcs)$importance["Proportion of Variance",1:n_pcs]),digits=2)*100
+	    colnames(pcstat)="PCA variance explained %"
+	    if(verbose){print(pcstat)}
+	return(invisible(list(pcs=pc,pca=pcs,pcstat=pcstat)))
 }
 
 
@@ -1118,97 +1200,97 @@ pcplot<-function(dat_mat,dat_groups='',samp_labels=T,n_pch=1,do_plots=c(T,T,T),c
   Library('ggplot2')
 # 
   if(samp_labels){library(ggrepel)}
-  if(help){
-    cat('\tINPUT\t - dat_mat : rows - genes, columns - samples\n')
-#   cat('\tINPUT\t - if dat_mat=list(dat_mat1,dat_mat2,...) each list is assumed to be a sub-grop of bigger dataset\n')
-    cat('\tINPUT\t - dat_groups - optional vector, length=ncol(dat_mat) used to color pca data as groups, discarded if class(dat_mat)==list\n')
-    
-    cat('\tINPUT\t - n_pcs - number of PCs to use, if n_pcs=="" auto-calculate optimum number\n')
-    cat('\tINPUT\t - check_scale - if input is pre-scaled, PCA will reflect the scaled dimension
-      \t\t\tie if columns scaled - PCA wrt to columns\n')
-    cat('\tNOTE\t - function used : "prcomp(t(dat_mat),scale=T,center=T)"\n\n')
-  }
+	if(help){
+		cat('\tINPUT\t - dat_mat : rows - genes, columns - samples\n')
+#		cat('\tINPUT\t - if dat_mat=list(dat_mat1,dat_mat2,...) each list is assumed to be a sub-grop of bigger dataset\n')
+		cat('\tINPUT\t - dat_groups - optional vector, length=ncol(dat_mat) used to color pca data as groups, discarded if class(dat_mat)==list\n')
+		
+		cat('\tINPUT\t - n_pcs - number of PCs to use, if n_pcs=="" auto-calculate optimum number\n')
+		cat('\tINPUT\t - check_scale - if input is pre-scaled, PCA will reflect the scaled dimension
+			\t\t\tie if columns scaled - PCA wrt to columns\n')
+		cat('\tNOTE\t - function used : "prcomp(t(dat_mat),scale=T,center=T)"\n\n')
+	}
 if(length(dat_groups)>1){if((ncol(dat_mat)!=length(dat_groups))){stop('ncol(dat_mat)==length(dat_groups) must be met')}}
-  pchmix=rep(c(21:25)[1:n_pch],length=32)
-   dat_is_list=F
-#   if(class(dat_mat)=='list'){
-#     datleg=as.data.frame(unlist(lapply(dat_mat,ncol)))
-#       colnames(datleg)='n'
-#     datleg$name=rownames(datleg)
-#     datleg$color=colmix[1:nrow(datleg)]
-#     datleg$point=pchmix[1:nrow(datleg)]
+	pchmix=rep(c(21:25)[1:n_pch],length=32)
+	 dat_is_list=F
+# 	if(class(dat_mat)=='list'){
+# 		datleg=as.data.frame(unlist(lapply(dat_mat,ncol)))
+# 			colnames(datleg)='n'
+# 		datleg$name=rownames(datleg)
+# 		datleg$color=colmix[1:nrow(datleg)]
+# 		datleg$point=pchmix[1:nrow(datleg)]
 
-#     datcol=''
-#     datpch=''
-#   for(idat in 1:nrow(datleg)){
-#     datcol=c(datcol,rep(datleg$color[idat],datleg$n[idat]))
-#     datpch=c(datpch,rep(datleg$pch[idat],datleg$n[idat]))
-#   }
-#     datcol=datcol[-1]
-#     datpch=datpch[-1]
-#     dat_mat=as.data.frame(dat_mat)
-#     dat_is_list=T
-#   }
+# 		datcol=''
+# 		datpch=''
+# 	for(idat in 1:nrow(datleg)){
+# 		datcol=c(datcol,rep(datleg$color[idat],datleg$n[idat]))
+# 		datpch=c(datpch,rep(datleg$pch[idat],datleg$n[idat]))
+# 	}
+# 		datcol=datcol[-1]
+# 		datpch=datpch[-1]
+# 		dat_mat=as.data.frame(dat_mat)
+# 		dat_is_list=T
+# 	}
 
 options(warn=-1)
-  if(length(dat_groups)>1){
-    datleg=Table(dat_groups)[,1:2]
-      colnames(datleg)=c('name','n')
-    datleg$color=colmix[1:nrow(datleg)]
-    datleg$point=pchmix[1:nrow(datleg)]
+	if(length(dat_groups)>1){
+		datleg=Table(dat_groups)[,1:2]
+			colnames(datleg)=c('name','n')
+		datleg$color=colmix[1:nrow(datleg)]
+		datleg$point=pchmix[1:nrow(datleg)]
 
-    datcol=rep('magenta',length(dat_groups))
-    datpch=rep(10,length(dat_groups))
-  for(idat in 1:nrow(datleg)){
+		datcol=rep('magenta',length(dat_groups))
+		datpch=rep(10,length(dat_groups))
+	for(idat in 1:nrow(datleg)){
     datcol[dat_groups==datleg$name[idat]]=datleg$color[idat]
     datpch[dat_groups==datleg$name[idat]]=datleg$point[idat]
-    # datcol=c(datcol,rep(datleg$color[idat],datleg$n[idat]))
-    # datpch=c(datpch,rep(datleg$point[idat],datleg$n[idat]))
-  }
-    # datcol=datcol[-1]
-    datpch=as.numeric(datpch[-1])
-    dat_is_list=T
-  }
+		# datcol=c(datcol,rep(datleg$color[idat],datleg$n[idat]))
+		# datpch=c(datpch,rep(datleg$point[idat],datleg$n[idat]))
+	}
+		# datcol=datcol[-1]
+		datpch=as.numeric(datpch[-1])
+		dat_is_list=T
+	}
 options(warn=0)
 
-  if(ncol(dat_mat)<n_pcs){
-    cat('\tinput only has',ncol(dat_mat),'observations < "n_pcs" => ', ncol(dat_mat),'will be used instead\n')
-    n_pcs=dat_mat
-  }
+	if(ncol(dat_mat)<n_pcs){
+		cat('\tinput only has',ncol(dat_mat),'observations < "n_pcs" => ', ncol(dat_mat),'will be used instead\n')
+		n_pcs=dat_mat
+	}
 
-  holder=pca(dat_mat,n_pcs=n_pcs,check_scaled=check_scaled)
-  pcs=as.data.frame(holder$pcs)
-  pcstat=holder$pcstat
-  rm(holder)
+	holder=pca(dat_mat,n_pcs=n_pcs,check_scaled=check_scaled)
+	pcs=as.data.frame(holder$pcs)
+	pcstat=holder$pcstat
+	rm(holder)
 
 
   pcs$legend=rownames(pcs)
 
-  if(do_plots[1]){
-    if(verbose){cat('\t\tpiechart - % variance explained\n')}
+	if(do_plots[1]){
+		if(verbose){cat('\t\tpiechart - % variance explained\n')}
         par(mar=c(2,10,2,10))
-      pie(pcstat,main=paste("Variance Explained (%) by PC1-5\n",dat_descr),cex=2,radius=pie_radius,labels=paste0("PC",1:n_pcs,"  ",pcstat,"%"),col=colmix[1:n_pcs])
+			pie(pcstat,main=paste("Variance Explained (%) by PC1-5\n",dat_descr),cex=2,radius=pie_radius,labels=paste0("PC",1:n_pcs,"  ",pcstat,"%"),col=colmix[1:n_pcs])
         par(mar=c(5,4,4,10))
-  }
+	}
 
-  if(do_plots[2]){
-    if(verbose){cat('\t\tplot - pc1~pc2, pc2~pc3 etc\n')}
-    for(ipc in 1:(n_pcs-1)){
-      if(!dat_is_list){
-#       par(mfrow=c(ceiling((n_pcs)/2),3))
+	if(do_plots[2]){
+		if(verbose){cat('\t\tplot - pc1~pc2, pc2~pc3 etc\n')}
+		for(ipc in 1:(n_pcs-1)){
+			if(!dat_is_list){
+#				par(mfrow=c(ceiling((n_pcs)/2),3))
         plot(pcs[,ipc],pcs[,ipc+1],pch=16,col=rgb(0, 0, 0,alpha=0.2),main=paste0('PC',ipc,' v PC',ipc+1,' ',dat_descr),xlab=paste0('PC',ipc,' ',pcstat[ipc],'%'),ylab=paste0('PC',ipc+1,' ',pcstat[ipc+1],'%'),frame.plot=F)
         if(samp_labels){text(pcs[,ipc],pcs[,ipc+1],labels=rownames(pcs))}
-#       par(mfrow=c(1,1))
-      }
+#				par(mfrow=c(1,1))
+			}
 
-      if(dat_is_list){
-#         par(mar=c(5,4,4, legend_space))
-#         plot(pcs[,ipc],pcs[,ipc+1],pch=datpch,col=datcol,bg=datcol,main=paste0('PC',ipc,' v PC',ipc+1,' ',dat_descr),xlab=paste0('PC',ipc,' ',pcstat[ipc],'%'),ylab=paste0('PC',ipc+1,' ',pcstat[ipc+1],'%'),frame.plot=F)
+			if(dat_is_list){
+# 				par(mar=c(5,4,4, legend_space))
+# 				plot(pcs[,ipc],pcs[,ipc+1],pch=datpch,col=datcol,bg=datcol,main=paste0('PC',ipc,' v PC',ipc+1,' ',dat_descr),xlab=paste0('PC',ipc,' ',pcstat[ipc],'%'),ylab=paste0('PC',ipc+1,' ',pcstat[ipc+1],'%'),frame.plot=F)
 #         if(samp_labels){text(pcs[,ipc],pcs[,ipc+1],labels=rownames(pcs))}
 # ##  create a new plot overlay (with no left margin) with legend on the topright
-#         par(fig=c(0,1,0,1), oma=c(0, 4, 0, 0), mar=c(0, 4, 0, 0), new=TRUE)
-#         plot.new()
-#         legend(x="topright",pch=datleg$point,box.lwd=0,box.col="white",col=datleg$color,pt.bg=datleg$color,legend=paste0(datleg$n,'  ',datleg$name))
+# 				par(fig=c(0,1,0,1), oma=c(0, 4, 0, 0), mar=c(0, 4, 0, 0), new=TRUE)
+# 				plot.new()
+# 				legend(x="topright",pch=datleg$point,box.lwd=0,box.col="white",col=datleg$color,pt.bg=datleg$color,legend=paste0(datleg$n,'  ',datleg$name))
 
 pdat=as.data.frame(pcs[,c(colnames(pcs)[ipc], colnames(pcs)[ipc+1])])
   colnames(pdat)=c('x','y')
@@ -1230,22 +1312,22 @@ if(!samp_labels){
       # geom_text_repel(color=datcol) +
       theme_classic(base_size=16)
         )}
-      }
-    }
-  }
+			}
+		}
+	}
 
-  # if(do_plots[3]){
-    
-  #   if(verbose){cat('\t\tbiplot - not informative on expression (vectors==genes)\n')}
-  #   Library('ggbiplot')
-  #   if(!dat_is_list){dummy=ggbiplot(pcs,obs.scale=1, var.scale=1, ellipse=TRUE, circle=TRUE)}
-  #   if(dat_is_list){dummy=ggbiplot(pcs,obs.scale=1, var.scale=1, ellipse=TRUE, circle=TRUE,groups=datcol)}
-  #   dummy=dummy + scale_color_discrete(name='')
-  #   dummy=dummy + theme(legend.direction='horizontal',legend.position='top')
-  #   dummy=dummy + theme_bw() + theme(panel.border=element_blank(),panel.grid.major=element_blank(),panel.grid.minor=element_blank(),axis.line=element_line(colour="black"))
-  #   print(dummy)
-  # }
-  return(invisible(list(pcs=pcs,pcstat=pcstat,datcol=datcol)))
+	# if(do_plots[3]){
+		
+	# 	if(verbose){cat('\t\tbiplot - not informative on expression (vectors==genes)\n')}
+	# 	Library('ggbiplot')
+	# 	if(!dat_is_list){dummy=ggbiplot(pcs,obs.scale=1, var.scale=1, ellipse=TRUE, circle=TRUE)}
+	# 	if(dat_is_list){dummy=ggbiplot(pcs,obs.scale=1, var.scale=1, ellipse=TRUE, circle=TRUE,groups=datcol)}
+	# 	dummy=dummy + scale_color_discrete(name='')
+	# 	dummy=dummy + theme(legend.direction='horizontal',legend.position='top')
+	# 	dummy=dummy + theme_bw() + theme(panel.border=element_blank(),panel.grid.major=element_blank(),panel.grid.minor=element_blank(),axis.line=element_line(colour="black"))
+	# 	print(dummy)
+	# }
+	return(invisible(list(pcs=pcs,pcstat=pcstat,datcol=datcol)))
 }
 
 
@@ -1483,49 +1565,49 @@ dat_groups=as.character(dat_groups)   ##  below does not like factors
 ##  need to implement removal for all.na values
 sd.check<-function(dat_mat,check_rows=F,check_cols=T,verbose=T){
 
-  if(verbose){cat("\n+++++++++++++++++ data qc check +++++++++++++++++\n")}
-  cat("dat_mat contains",ncol(dat_mat),"variables, of which :\n")
-  dat_class=dat.class(dat_mat,verbose=verbose)
+	if(verbose){cat("\n+++++++++++++++++ data qc check +++++++++++++++++\n")}
+	cat("dat_mat contains",ncol(dat_mat),"variables, of which :\n")
+	dat_class=dat.class(dat_mat,verbose=verbose)
 
     dat_num=dat_mat[,dat_class==("numeric"),drop=F]
     dat_fac=dat_mat[,dat_class=="factor",drop=F]
     dat_otr=dat_mat[,!(dat_class%in%c("factor","numeric")),drop=F]
 
-  rowind=1:nrow(dat_mat)
-  colind=1:ncol(dat_mat)
+	rowind=1:nrow(dat_mat)
+	colind=1:ncol(dat_mat)
 
-  if(check_cols==T){
-    fac_col=apply(dat_fac,2,function(x) sum(table(x)!=0))
-    num_col=apply(dat_num,2,sd,na.rm=T)
-    numvarcol=names(num_col)[num_col==0]
+	if(check_cols==T){
+		fac_col=apply(dat_fac,2,function(x) sum(table(x)!=0))
+		num_col=apply(dat_num,2,sd,na.rm=T)
+		numvarcol=names(num_col)[num_col==0]
 
-    if(length(numvarcol)){cat("\tcol - values do not vary (sd=0) :\t",paste(numvarcol,collapse=", "),"\n")}
-      facvarcol=names(fac_col)[fac_col==1]
-    if(length(facvarcol)){cat("\tcol - contains single value :\t\t",paste(facvarcol,collapse=", "),"\n")}
-      facvaridc=names(fac_col)[fac_col==nrow(dat_fac)]
-    if(length(facvaridc)){cat("\tcol - as many levels as rows :\t\t",paste(facvaridc,collapse=", "),"\n")}
-      colind=!(colnames(dat_mat)%in% c(numvarcol,facvarcol,facvaridc))
-  }
+		if(length(numvarcol)){cat("\tcol - values do not vary (sd=0) :\t",paste(numvarcol,collapse=", "),"\n")}
+			facvarcol=names(fac_col)[fac_col==1]
+		if(length(facvarcol)){cat("\tcol - contains single value :\t\t",paste(facvarcol,collapse=", "),"\n")}
+			facvaridc=names(fac_col)[fac_col==nrow(dat_fac)]
+		if(length(facvaridc)){cat("\tcol - as many levels as rows :\t\t",paste(facvaridc,collapse=", "),"\n")}
+			colind=!(colnames(dat_mat)%in% c(numvarcol,facvarcol,facvaridc))
+	}
 
-  if(check_rows==T){
-    fac_row=apply(dat_fac,1,function(x) sum(table(x)!=0))
-    num_row=apply(dat_num,1,sd,na.rm=T)
+	if(check_rows==T){
+		fac_row=apply(dat_fac,1,function(x) sum(table(x)!=0))
+		num_row=apply(dat_num,1,sd,na.rm=T)
 
-    numvarrow=names(num_row)[num_row==0]
-    if(length(numvarrow)){cat("\t",length(numvarrow),"rows - values do not vary (sd=0) , first ",min(20,length(numvarrow)),":\n",paste(numvarrow[1:min(20,length(numvarrow))],collapse=", "),"\n")}
-      facvarrow=names(fac_row)[fac_row==1]
-    if(length(facvarrow)){cat("\t",length(facvarrow),"rows - contain single value 'factor', first ",min(20,length(facvarrow)),":\n",paste(facvarrow[1:min(20,length(facvarrow))],collapse=", "),"\n")}
-      facvaridr=names(fac_row)[fac_row==nrow(dat_fac)]
-    if(length(facvaridr)){cat("\trow - as many levels as rows :\t\t",paste(facvaridr,collapse=", "),"\n")}
-      rowind=!(rownames(dat_mat)%in% c(numvarrow,facvarrow,facvaridr))
-  }
+		numvarrow=names(num_row)[num_row==0]
+		if(length(numvarrow)){cat("\t",length(numvarrow),"rows - values do not vary (sd=0) , first ",min(20,length(numvarrow)),":\n",paste(numvarrow[1:min(20,length(numvarrow))],collapse=", "),"\n")}
+			facvarrow=names(fac_row)[fac_row==1]
+		if(length(facvarrow)){cat("\t",length(facvarrow),"rows - contain single value 'factor', first ",min(20,length(facvarrow)),":\n",paste(facvarrow[1:min(20,length(facvarrow))],collapse=", "),"\n")}
+			facvaridr=names(fac_row)[fac_row==nrow(dat_fac)]
+		if(length(facvaridr)){cat("\trow - as many levels as rows :\t\t",paste(facvaridr,collapse=", "),"\n")}
+			rowind=!(rownames(dat_mat)%in% c(numvarrow,facvarrow,facvaridr))
+	}
 
-  if(ncol(dat_otr)>0){
-      cat("\tcol - not factor nor numeric :\t",paste(names(dat_otr),collapse=", "),"\n")
-  }
-    cat("\n")
+	if(ncol(dat_otr)>0){
+	    cat("\tcol - not factor nor numeric :\t",paste(names(dat_otr),collapse=", "),"\n")
+	}
+		cat("\n")
 
-  return(invisible(dat_mat[rowind,colind]))
+	return(invisible(dat_mat[rowind,colind]))
 }
 
 
@@ -1684,44 +1766,44 @@ if(length(mth)==2){
 is.missing<-function(dat_mat,do_plots=F,use_grid=F,dat_descr='',define_na=c(NA,NaN),colvec=c('#9ebcda','#e6550d')){
 ##  check for missing values in dat_mat, by cols
 ##  do_plots=T to visualise missing (red) & non-missing (blue)
-  misd=apply(dat_mat,2,function(x)(x%in%define_na))
-    rownames(misd)=rownames(dat_mat)
+	misd=apply(dat_mat,2,function(x)(x%in%define_na))
+		rownames(misd)=rownames(dat_mat)
 
-  n_overlap=sum(apply(misd,1,sum)==0)
-  cat('\t------------------   of total samples',nrow(dat_mat),', ',n_overlap,' (',frac(n_overlap,nrow(dat_mat),perc=T),'%) remaining if "complete.cases()"  ------------------\n')
+	n_overlap=sum(apply(misd,1,sum)==0)
+	cat('\t------------------   of total samples',nrow(dat_mat),', ',n_overlap,' (',frac(n_overlap,nrow(dat_mat),perc=T),'%) remaining if "complete.cases()"  ------------------\n')
 
-  misn=as.data.frame(sort(apply(misd,2,sum),decreasing=T))
-    colnames(misn)='count'
-  misn$percent=round(misn$count/nrow(misd),digits=3)
+	misn=as.data.frame(sort(apply(misd,2,sum),decreasing=T))
+		colnames(misn)='count'
+	misn$percent=round(misn$count/nrow(misd),digits=3)
 
-  if(n_overlap<nrow(dat_mat)){
-    cat('\t\t\t\tcolumns with missing dt (limited to to 10):\n\n')
-    print(misn[1:min(nrow(misn),10),])
+	if(n_overlap<nrow(dat_mat)){
+		cat('\t\t\t\tcolumns with missing dt (limited to to 10):\n\n')
+		print(misn[1:min(nrow(misn),10),])
 
-  }
+	}
 
-  if(dat_descr!=''){
-    paste0(dat_descr,'\n')
-  }
+	if(dat_descr!=''){
+		paste0(dat_descr,'\n')
+	}
 
-  if(do_plots & !use_grid){
-    misd=misd*1
-    Library('gplots')
-    heatmap.2(make.numeric(misd),breaks=seq(0,1,length=(3)),col=colvec,tracecol=F,dendrogram='both',Rowv=T,Colv=T,margins=c(12,12),density.info='none',keysize=1,cexCol=1.2,cexRow=1.2,symkey=F)
+	if(do_plots & !use_grid){
+		misd=misd*1
+		Library('gplots')
+		heatmap.2(make.numeric(misd),breaks=seq(0,1,length=(3)),col=colvec,tracecol=F,dendrogram='both',Rowv=T,Colv=T,margins=c(12,12),density.info='none',keysize=1,cexCol=1.2,cexRow=1.2,symkey=F)
 
-    mtext(dat_descr,adj=1,side=3,line=2)
-    mtext(paste0('n.complete : ',n_overlap),adj=1,side=3)
-  }
+		mtext(dat_descr,adj=1,side=3,line=2)
+		mtext(paste0('n.complete : ',n_overlap),adj=1,side=3)
+	}
 
-  if(do_plots & use_grid){
-    misd=misd*1
-    Library('gplots')
-    heatmap.2(make.numeric(misd),breaks=seq(0,1,length=(3)),col=colvec,tracecol=F,dendrogram='both',Rowv=T,Colv=T,margins=c(12,12),density.info='none',keysize=1,cexCol=1.2,cexRow=1.2,symkey=F,colsep=0:ncol(data_mat),rowsep=0:nrow(data_mat),sepcolor='white',sepwidth=c(0.05,0.05))
+	if(do_plots & use_grid){
+		misd=misd*1
+		Library('gplots')
+		heatmap.2(make.numeric(misd),breaks=seq(0,1,length=(3)),col=colvec,tracecol=F,dendrogram='both',Rowv=T,Colv=T,margins=c(12,12),density.info='none',keysize=1,cexCol=1.2,cexRow=1.2,symkey=F,colsep=0:ncol(data_mat),rowsep=0:nrow(data_mat),sepcolor='white',sepwidth=c(0.05,0.05))
 
-    mtext(dat_descr,adj=1,side=3,line=2)
-    mtext(paste0('n.complete : ',n_overlap),adj=1,side=3)
-  }
-  return(invisible(misn))
+		mtext(dat_descr,adj=1,side=3,line=2)
+		mtext(paste0('n.complete : ',n_overlap),adj=1,side=3)
+	}
+	return(invisible(misn))
 }
 
 
@@ -1917,6 +1999,64 @@ dnmr<-function(dat_lis,dtb='default',phen=''){ #bkg,
 
 
 
+eefnr<-function(dat_lis,dtb='default',phen=''){ #bkg,
+##  dtb - required list - DNM in 'conrols' ie healthy parents & offspring
+##   dnmDB - pre-made dataset, part of "adds" package, downloaded from http://denovo-db.gs.washington.edu/denovo-db/  ## mapped to HUGO gene ids, genes with DNM in controls removed from DNM in
+  if(dtb[1]=='default'){
+    # cat('\tLoad(~/Dropbox/PROJ/ednm/dtb/denovo-db.variants.v.1.5__frameshift_missense_stopgain.Rdata)\n')
+    # Load('~/Dropbox/PROJ/ednm/dtb/denovo-db.variants.v.1.5__frameshift_missense_stopgain.Rdata')
+    dtb=eefndb
+  }      ##  load pre-made dataset, part of "adds" package
+  if(!('control'%in%names(dtb))){stop('"control" - list of DNM in healthy controls && offspring (named "control") is required')}
+
+
+   cat('\tcheck DNM dtb and background compatibility\n')
+  # bkg=overlap(unlist(dtb),bkg)
+
+  # bkg=c(bkg$inter,bkg$inb)  ##  background is specified as overap && 'expressed' - ie have significant signal in the dataset used to derive the list
+  ## the above definition is the same as the "bkg" input by definiton..
+
+  dtb_contr=dtb$control
+  dtb=dtb[names(dtb)!='control']
+
+   cat('\n')
+  # str(bkg)
+  if(length(intersect(unlist(dtb),unlist(dat_lis)))==0){stop('check that dat_lis and bkg IDs are HUGO gene names OR match the provided dtb')}
+  # dtb=lapply(dtb,function(x){x[x%in%bkg]})
+  dnmen=list()
+  fetp=list()
+  cat('\n\nperform FET enrichment\n')
+  for(idnm in names(dtb)){
+    cat('\t',idnm)
+    holder=list()
+    for(idat in names(dat_lis)){
+      holder[[idat]]=unlist(fet(
+              # sampl=dat_lis[[idat]]
+              # ,bkgrnd=bkg
+              # ,success=dtb[[idnm]]
+              # ,
+              counts=T
+              ,samp.success=sum(dtb[[idnm]]%in%dat_lis[[idat]])
+              ,bkgrnd.success=sum(dtb_contr%in%dat_lis[[idat]])
+              ,samp.fail=sum(!(dtb[[idnm]]%in%dat_lis[[idat]]))
+              ,bkgrnd.fail=sum(!(dtb_contr%in%dat_lis[[idat]]))
+              ,tail='greater'
+              ))
+
+    }
+    dnmen[[idnm]]=as.data.frame(t(as.data.frame(holder)))
+    fetp[[idnm]]=dnmen[[idnm]]$FETp
+
+  }
+    cat('\n\n')
+
+  fetp=as.data.frame(fetp)
+    rownames(fetp)=names(dat_lis)
+
+  return(list(fetp=fetp,dnmen=dnmen))
+}
+
+
 
 
 
@@ -2021,7 +2161,7 @@ return(invisible(list(lmp=lmpstat,rsq=rsqstat,nsamp=nsample)))
 
 
 
-bgcommon<-function(list_dat,transform=F,dat_mat='',union=F,verbose=T){    #help=F,
+bgcommon<-function(list_dat,transform=F,dat_mat='',union=F,verbose=T){		#help=F,
 # if(help){
 #  cat("\n\tUSE\t: determine common background (union or intersect) across all entries in expression list\n")
 #  cat("\tNOTE\t: list_dat - list of expression matrices: row=genes, col=samples\n")
@@ -2183,46 +2323,46 @@ deg.limma<-function(dat_mat,cov_mat,contrast=NULL,deg_type=c('univariate'),sanit
 # ##  differential gene expression using "limma" pkg
 # ##  dat_mat - rows=genes, cols=samples
 # ##  cov_mat - data.frame - basis for making model.matrix(~.,data=cov_mat)
-# ##        + alternatively can be used as covariate eg factor -> levels, continuous - as is
-#   dat_class=dat.class(cov_mat)
-#   if(sum(!dat_class%in%c('factor','numeric'))!=0){stop('expect class(cov_mat) as factor or numeric only, convert character to numeric or factor')}
+# ##				+ alternatively can be used as covariate eg factor -> levels, continuous - as is
+# 	dat_class=dat.class(cov_mat)
+# 	if(sum(!dat_class%in%c('factor','numeric'))!=0){stop('expect class(cov_mat) as factor or numeric only, convert character to numeric or factor')}
 
-#   if(!sanity){
-#     order_check=sum(colnames(dat_mat)!=rownames(cov_mat))
-#     if(order_check!=0){
-#       warning('\n\t\tWARNING\t: (colnames(dat_mat)==rownames(cov_mat)) shows : ',order_check,' not in same order','\n')
-#     }
-#   }
-#   if(sanity){
-#     holder=intersect(colnames(dat_mat),rownames(cov_mat))
-#     dat_mat=dat_mat[,holder,drop=F]
-#     cov_mat=cov_mat[holder,,drop=F]
-#      if(verbose){cat('\t\tcolnames(dat_mat) n=',ncol(dat_mat),' rownames(cov_mat) n=',nrow(cov_mat),' same order',sum(colnames(dat_mat)==rownames(cov_mat)),'\n')}
-#   }
+# 	if(!sanity){
+# 		order_check=sum(colnames(dat_mat)!=rownames(cov_mat))
+# 		if(order_check!=0){
+# 			warning('\n\t\tWARNING\t: (colnames(dat_mat)==rownames(cov_mat)) shows : ',order_check,' not in same order','\n')
+# 		}
+# 	}
+# 	if(sanity){
+# 		holder=intersect(colnames(dat_mat),rownames(cov_mat))
+# 		dat_mat=dat_mat[,holder,drop=F]
+# 		cov_mat=cov_mat[holder,,drop=F]
+# 		 if(verbose){cat('\t\tcolnames(dat_mat) n=',ncol(dat_mat),' rownames(cov_mat) n=',nrow(cov_mat),' same order',sum(colnames(dat_mat)==rownames(cov_mat)),'\n')}
+# 	}
 
 #  Library('limma')
-#   if(ncol(cov_mat)==1){
+# 	if(ncol(cov_mat)==1){
 #     cat('\n\tunivariate limma model ~',colnames(cov_mat),'\n')
-#     desm=model.matrix(~.,data=cov_mat)
-#       # colnames(desm)=c('intercept',colnames(cov_mat))        ##  this will only work for numeric vars
-#     degall=lmFit(dat_mat, desm)
-#     degall=eBayes(degall)
-#     # degall=topTable(degall,coef=colnames(cov_mat), adjust="BH", number=nrow(dat_mat))
+# 		desm=model.matrix(~.,data=cov_mat)
+# 			# colnames(desm)=c('intercept',colnames(cov_mat))        ##  this will only work for numeric vars
+# 		degall=lmFit(dat_mat, desm)
+# 		degall=eBayes(degall)
+# 		# degall=topTable(degall,coef=colnames(cov_mat), adjust="BH", number=nrow(dat_mat))
 #     degall=topTable(degall,coef=3, adjust="BH", number=nrow(dat_mat))
-#     degall=degall[,c('logFC','P.Value','adj.P.Val')]
-#       colnames(degall)=c('logFC','Pval','FDR')
+# 		degall=degall[,c('logFC','P.Value','adj.P.Val')]
+# 			colnames(degall)=c('logFC','Pval','FDR')
 #       Table(degall$FDR<0.01)
-#     return(invisible(degall))
-#   }
+# 		return(invisible(degall))
+# 	}
 
-#   if(ncol(cov_mat)>1){
-#     univar=list()
-#     mltvar=list()
+# 	if(ncol(cov_mat)>1){
+# 		univar=list()
+# 		mltvar=list()
 
-#       desm=model.matrix(~., data=cov_mat)
-# #       colnames(desm)=c('intercept',colnames(cov_mat))
-#       degall=lmFit(dat_mat, desm)
-#       degall=eBayes(degall)
+# 			desm=model.matrix(~., data=cov_mat)
+# #				colnames(desm)=c('intercept',colnames(cov_mat))
+# 			degall=lmFit(dat_mat, desm)
+# 			degall=eBayes(degall)
 
 #     for(ides in colnames(desm)){
 #       mltvar[[ides]]=topTable(degall, coef=ides, adjust="BH", number=nrow(dat_mat))
@@ -2231,12 +2371,12 @@ deg.limma<-function(dat_mat,cov_mat,contrast=NULL,deg_type=c('univariate'),sanit
 #       }
 
 
-#     for(icov in colnames(cov_mat)){
+# 		for(icov in colnames(cov_mat)){
 # #      cat('\t------------------   ',icov,'   ------------------\n')
-#       desm=model.matrix(~.,data=cov_mat[,icov,drop=F])
-# #       colnames(desm)=c('intercept',icov)
-#       degsin=lmFit(dat_mat, desm)
-#       degsin=eBayes(degsin)
+# 			desm=model.matrix(~.,data=cov_mat[,icov,drop=F])
+# #				colnames(desm)=c('intercept',icov)
+# 			degsin=lmFit(dat_mat, desm)
+# 			degsin=eBayes(degsin)
 
 #     for(ides in colnames(desm)[2:ncol(desm)]){
 # #      cat('\t',ides,'\n')
@@ -2244,14 +2384,14 @@ deg.limma<-function(dat_mat,cov_mat,contrast=NULL,deg_type=c('univariate'),sanit
 #         univar[[ides]]=univar[[ides]][,c('logFC','P.Value','adj.P.Val')]
 #         colnames(univar[[ides]])=c('logFC','Pval','FDR')
 
-#     }
+# 		}
 #   }
-#     readme='\tunivar\t- limma using one covariate at a time
-#         \tmultvar\t- limma using all covariates in same model
+# 		readme='\tunivar\t- limma using one covariate at a time
+# 				\tmultvar\t- limma using all covariates in same model
 #         \tmodel.m\t- model.matrix(~0+., data=cov_mat) used to generate results
-#         '
-#     return(invisible(list(univar=univar,multvar=mltvar,readme=readme)))
-#   }
+# 				'
+# 		return(invisible(list(univar=univar,multvar=mltvar,readme=readme)))
+# 	}
 # }
 
 
@@ -2630,14 +2770,14 @@ gsea.enrich<-function(genlis,rnkdat,dat_descr='',gsea_path="/Data/ks/gsea_lib1/"
 
 
 
-# gsea_path="/Users/ks/Dropbox/bin/gsea/"
+#	gsea_path="/Users/ks/Dropbox/bin/gsea/"
 gsea_path=paste0(gsea_path,'/')   ##  just in case cos the error msg is not helpful otherwise, probably will fail on windows since weird hashes
 system(paste0('mkdir ',gsea_path,'/working'))
 
-# if(dat_descr!=''){dat_descr=paste0(dat_descr,'.')}
-####  .gmt file - module 1 per row, name followed by \t genes in module   ------------------------------------------
-# write.file(t(c(names(genlis),t(as.data.frame(genlis)))),file=paste0(gsea_path,'/working/',dat_descr,'gsea_enrich.gmt'),row.names=F,col.names=F)
-# write.file(t(c(names(genlis),t(as.data.frame(genlis)))),file=paste0(gsea_path,'/working/gsea_enrich.gmt'),row.names=F,col.names=F)
+#	if(dat_descr!=''){dat_descr=paste0(dat_descr,'.')}
+####  .gmt file - module 1 per row, name followed by \t genes in module		------------------------------------------
+#	write.file(t(c(names(genlis),t(as.data.frame(genlis)))),file=paste0(gsea_path,'/working/',dat_descr,'gsea_enrich.gmt'),row.names=F,col.names=F)
+#	write.file(t(c(names(genlis),t(as.data.frame(genlis)))),file=paste0(gsea_path,'/working/gsea_enrich.gmt'),row.names=F,col.names=F)
 cat('\twrite genlis.gmt\n')
 sink(paste0(gsea_path,'/working/gsea_enrich.gmt'))
   for(ilis in names(genlis)){
@@ -2645,36 +2785,36 @@ sink(paste0(gsea_path,'/working/gsea_enrich.gmt'))
    cat(as.vector(paste(c(ilis,ilis,genlis[ilis][[1]]),collapse="\t")),"\n",sep="")
   }
 sink()
-####  .rnk file - 2 columns "IDs", "P"    ------------------------------------------
-  if(!ncol(rnkdat)%in%c(1,2)){stop('rnkdat does not have 2 coluns')}
-  if(ncol(rnkdat)==2){
-    bkg=rnkdat[,1]
-    cat('\tncol(rnkdat)==2, assuming rnkdat already in correct format colnames = c("IDs","P"), where P==rank measure\n')
-#   write.file(rnkdat,file=paste0(gsea_path,'/working/',dat_descr,'gsea_enrich.rnk'),row.names=F,col.names=T)
+####  .rnk file - 2 columns "IDs", "P"		------------------------------------------
+	if(!ncol(rnkdat)%in%c(1,2)){stop('rnkdat does not have 2 coluns')}
+	if(ncol(rnkdat)==2){
+		bkg=rnkdat[,1]
+		cat('\tncol(rnkdat)==2, assuming rnkdat already in correct format colnames = c("IDs","P"), where P==rank measure\n')
+#		write.file(rnkdat,file=paste0(gsea_path,'/working/',dat_descr,'gsea_enrich.rnk'),row.names=F,col.names=T)
     if(sum(grepl('Inf|NA|NaN',rnkdat[,2]))>0){stop('rnkdat contains one of these values: "Inf", "NA", "NaN" ')}
-    write.file(rnkdat,file=paste0(gsea_path,'/working/gsea_enrich.rnk'),row.names=F,col.names=T)
-  }
-  if(ncol(rnkdat)==1){
-    cat('\tncol(rnkdat)==1, assuming rnkdat has appropriate rownames and ranks in the column\n')
-    rnkdat=as.data.frame(rnkdat)
-      colnames(rnkdat)='P'
-    rnkdat$IDs=rownames(rnkdat)
-    rnkdat=rnkdat[,c('IDs','P')]
-    bkg=rownames(rnkdat)
+		write.file(rnkdat,file=paste0(gsea_path,'/working/gsea_enrich.rnk'),row.names=F,col.names=T)
+	}
+	if(ncol(rnkdat)==1){
+		cat('\tncol(rnkdat)==1, assuming rnkdat has appropriate rownames and ranks in the column\n')
+		rnkdat=as.data.frame(rnkdat)
+			colnames(rnkdat)='P'
+		rnkdat$IDs=rownames(rnkdat)
+		rnkdat=rnkdat[,c('IDs','P')]
+		bkg=rownames(rnkdat)
     if(sum(grepl('Inf|NA|NaN',rnkdat[,2]))>0){stop('rnkdat contains one of these values: "Inf", "NA", "NaN" ')}
-#   write.file(rnkdat,file=paste0(gsea_path,'/working/',dat_descr,'gsea_enrich.rnk'),row.names=F,col.names=T)
-    write.file(rnkdat,file=paste0(gsea_path,'/working/gsea_enrich.rnk'),row.names=F,col.names=T)
-  }
-####  .chip file - colunms: "Probe Set ID", "Gene Symbol",  "Gene Title" - same is easiest (background)   ------------------------------------------
+#		write.file(rnkdat,file=paste0(gsea_path,'/working/',dat_descr,'gsea_enrich.rnk'),row.names=F,col.names=T)
+		write.file(rnkdat,file=paste0(gsea_path,'/working/gsea_enrich.rnk'),row.names=F,col.names=T)
+	}
+####  .chip file - colunms: "Probe Set ID",	"Gene Symbol",	"Gene Title" - same is easiest (background)		------------------------------------------
 # build using the bkg list - derived based on the rnk list above
-  chipdat=list("Probe Set ID"=bkg,"Gene Symbol"=bkg,"Gene Title"=bkg)
-  chipdat=as.data.frame(chipdat)
-    colnames(chipdat)=c("Probe Set ID","Gene Symbol","Gene Title")    ##  assuming GSEA is actually picky about colnames
-# write.file(chipdat,file=paste0(gsea_path,'/working/',dat_descr,'gsea_enrich.chip'),row.names=F,col.names=T)
-  write.file(chipdat,file=paste0(gsea_path,'/working/gsea_enrich.chip'),row.names=F,col.names=T)
+	chipdat=list("Probe Set ID"=bkg,"Gene Symbol"=bkg,"Gene Title"=bkg)
+	chipdat=as.data.frame(chipdat)
+		colnames(chipdat)=c("Probe Set ID","Gene Symbol","Gene Title")		##  assuming GSEA is actually picky about colnames
+#	write.file(chipdat,file=paste0(gsea_path,'/working/',dat_descr,'gsea_enrich.chip'),row.names=F,col.names=T)
+	write.file(chipdat,file=paste0(gsea_path,'/working/gsea_enrich.chip'),row.names=F,col.names=T)
 
 
-  options(scipen=999) ##  prevent R using scientific notation to numbers
+  options(scipen=999)	##  prevent R using scientific notation to numbers
 ##-Xmx5000mm flags the amount of memory available to java. The default is -Xmx512m
 ##  all hail Aida for working out the full cmd code to run GSEA, i still remember her frustration when she was doing this..
 ##   -rpt_label adds a label to the out_folder which can make it too long -> mid part of the name becomes ".." - the part required for grep to work ==> hardcoded as blank
@@ -2693,7 +2833,7 @@ print(gsea_cmd)
 
 
   out_dir_nam=list.files(gsea_path,pattern='my_analysis')
-#  out_dir_nam=out_dir_nam[out_dir_nam!='working']  
+#  out_dir_nam=out_dir_nam[out_dir_nam!='working']	
  resfnam=list.files(paste0(gsea_path,'/',out_dir_nam),pattern='.xls')
 
   humpty=read.delim(paste0(gsea_path,'/',out_dir_nam,'/',resfnam[grepl('gsea_report_for_na_pos',resfnam)]))
@@ -2705,32 +2845,32 @@ resfnam=resfnam[!grepl('gsea_report_for_na_pos|gsea_report_for_na_neg|na_pos_ver
 
 resfnam=gsub('[.]xls','',resfnam)
 sidat=list()
-  for(isig in resfnam){
-    sidat[[isig]]=read.delim(paste0(gsea_path,'/',out_dir_nam,'/',isig,'.xls'))
-  }
+	for(isig in resfnam){
+	  sidat[[isig]]=read.delim(paste0(gsea_path,'/',out_dir_nam,'/',isig,'.xls'))
+	}
 
-#pdf(paste0(gsea_path,'img/dummy.pdf'),height=5,width=10)   ##  for testing purposes, to save plots, more efficient to create a pdf() before running the function & dev.off() after
+#pdf(paste0(gsea_path,'img/dummy.pdf'),height=5,width=10)		##  for testing purposes, to save plots, more efficient to create a pdf() before running the function & dev.off() after
   if(do_plots){
-    for(isig in names(sidat)){
-      holder=sidat[isig][[1]]
+  	for(isig in names(sidat)){
+  		holder=sidat[isig][[1]]
 
-      ylimdat=c(min(holder$RUNNING.ES)-0.1,(max(holder$RUNNING.ES)))
-    plot(x=holder$RANK.IN.GENE.LIST,y=holder$RUNNING.ES,type='l',lwd=4,col='darkgreen',frame.plot=F,ylim=ylimdat,main=paste0(isig,'\n',dat_descr),las=1,xlab='rank in gene list',ylab='GSEA enrichment score',...) #ylim=ylimdat
-    rug(x=holder$RANK.IN.GENE.LIST, ticksize = 0.1, side = 1, lwd = 0.5, col = par("fg"),quiet = getOption("warn") < 0)
+  		ylimdat=c(min(holder$RUNNING.ES)-0.1,(max(holder$RUNNING.ES)))
+		plot(x=holder$RANK.IN.GENE.LIST,y=holder$RUNNING.ES,type='l',lwd=4,col='darkgreen',frame.plot=F,ylim=ylimdat,main=paste0(isig,'\n',dat_descr),las=1,xlab='rank in gene list',ylab='GSEA enrichment score',...) #ylim=ylimdat
+		rug(x=holder$RANK.IN.GENE.LIST, ticksize = 0.1, side = 1, lwd = 0.5, col = par("fg"),quiet = getOption("warn") < 0)
 
-    mtext(paste0('FDR pos  ',humpty[humpty$NAME==isig,]$FDR.q.val,'   FDR neg   ',dumpty[dumpty$NAME==isig,]$FDR.q.val),adj=1,side=1,line=4)
-  }
+		mtext(paste0('FDR pos  ',humpty[humpty$NAME==isig,]$FDR.q.val,'   FDR neg   ',dumpty[dumpty$NAME==isig,]$FDR.q.val),adj=1,side=1,line=4)
+	}
   }
 #dev.off()
 
-  cat('\tclean-up - removing ',paste0('rm ',gsea_path,'/',out_dir_nam),'directory generated by GSEA\n')
-  system(paste0('rm ',gsea_path,'/',out_dir_nam,'/*'))
-  system(paste0('rm ',gsea_path,'/',out_dir_nam,'/edb/*'))
-  system(paste0('rmdir ',gsea_path,'/',out_dir_nam,'/edb'))
-  system(paste0('rmdir ',gsea_path,'/',out_dir_nam))
-  cat('\tclean-up - removing ',paste0('rm ',gsea_path,'/working *'),'input files for GSEA\n')
-  system(paste0('rm ',gsea_path,'/working/*'))
-  return(invisible(list(pos=humpty,neg=dumpty,bkg=bumpty,set_size=fumpty,sigdat=sidat))) #genlis=holder,
+	cat('\tclean-up - removing ',paste0('rm ',gsea_path,'/',out_dir_nam),'directory generated by GSEA\n')
+	system(paste0('rm ',gsea_path,'/',out_dir_nam,'/*'))
+	system(paste0('rm ',gsea_path,'/',out_dir_nam,'/edb/*'))
+	system(paste0('rmdir ',gsea_path,'/',out_dir_nam,'/edb'))
+	system(paste0('rmdir ',gsea_path,'/',out_dir_nam))
+	cat('\tclean-up - removing ',paste0('rm ',gsea_path,'/working *'),'input files for GSEA\n')
+	system(paste0('rm ',gsea_path,'/working/*'))
+	return(invisible(list(pos=humpty,neg=dumpty,bkg=bumpty,set_size=fumpty,sigdat=sidat))) #genlis=holder,
 
 }
 
@@ -3356,61 +3496,61 @@ if(length(sintom)==1){
 
 
 cyt.connect<-function(cor_mat,thresh=0.001,use_pcor=T){
-# USE: \t- convert correlation matrix to cytoscape connections
-# NOTE:\t- pcor=T - use Aracne can to calculate partial correlations
-# NOTE:\t- thresh=0.001, pcor=F - use correlation matrix to get connections that pass the R2 threshold
-  if(nrow(cor_mat)!=ncol(cor_mat)){
-    stop('\n\tERROR: expect a square correlation matrix \n\n')
-  }
+#	USE: \t- convert correlation matrix to cytoscape connections
+#	NOTE:\t- pcor=T - use Aracne can to calculate partial correlations
+#	NOTE:\t- thresh=0.001, pcor=F - use correlation matrix to get connections that pass the R2 threshold
+	if(nrow(cor_mat)!=ncol(cor_mat)){
+		stop('\n\tERROR: expect a square correlation matrix \n\n')
+	}
 
-  if(use_pcor){
-     cat('\tcalculating partial correlations using Aracne PMID: 16723010\n')
-    Library('minet')
-    cor_mat=aracne(abs(cor_mat))
-  }
+	if(use_pcor){
+		 cat('\tcalculating partial correlations using Aracne PMID: 16723010\n')
+		Library('minet')
+		cor_mat=aracne(abs(cor_mat))
+	}
 
-  for(irow in 1:nrow(cor_mat)){
-    humpty=as.data.frame(cor_mat[irow,][cor_mat[irow,]>=thresh])
-      colnames(humpty)='pcor'
-      humpty$a=rownames(cor_mat)[irow]
-      humpty$b=rownames(humpty)
-# cat(nrow(humpty),'\n')
-# print(irow)
-    if(irow==1){dumpty=humpty}
-    if(irow>1){dumpty=rbind(dumpty,humpty)}
+	for(irow in 1:nrow(cor_mat)){
+		humpty=as.data.frame(cor_mat[irow,][cor_mat[irow,]>=thresh])
+			colnames(humpty)='pcor'
+			humpty$a=rownames(cor_mat)[irow]
+			humpty$b=rownames(humpty)
+#	cat(nrow(humpty),'\n')
+#	print(irow)
+		if(irow==1){dumpty=humpty}
+		if(irow>1){dumpty=rbind(dumpty,humpty)}
 
 #print(nrow(dumpty))
-  }
-  dumpty=dumpty[dumpty$a!=dumpty$b,]  ##  remove genes interacting with themselves
-  rownames(dumpty)=1:nrow(dumpty)
-  cat('\t',length(unique(c(dumpty$a,dumpty$b))),'of',nrow(cor_mat),' : ',(length(unique(c(dumpty$a,dumpty$b)))/nrow(cor_mat))*100,'% of genes have connections','\n')
+	}
+	dumpty=dumpty[dumpty$a!=dumpty$b,]	##  remove genes interacting with themselves
+	rownames(dumpty)=1:nrow(dumpty)
+	cat('\t',length(unique(c(dumpty$a,dumpty$b))),'of',nrow(cor_mat),' : ',(length(unique(c(dumpty$a,dumpty$b)))/nrow(cor_mat))*100,'% of genes have connections','\n')
 
 ## filtering to remove duplicate connections ie a~b, b~a
 
-  dtb=dumpty
-  rm(humpty)
-  rm(dumpty)
-  ## more elegant way to do this is first sort the genes then paste them..........
-    dtb$x=paste(dtb$a,dtb$b)
-    dtb$y=paste(dtb$b,dtb$a)
-    dumpty=list()
-   k=nrow(dtb)
-  cat('\tremoving duplicate connectoins\n')
-  while(nrow(dtb)>0){
-    humpty=dtb[which(dtb$x==dtb$x[1] | dtb$x==dtb$y[1] | dtb$y==dtb$y[1] | dtb$y==dtb$y[1]), ]
-    dtb=dtb[-which(dtb$x==dtb$x[1] | dtb$x==dtb$y[1] | dtb$y==dtb$y[1] | dtb$y==dtb$y[1]), ]
+	dtb=dumpty
+	rm(humpty)
+	rm(dumpty)
+	## more elegant way to do this is first sort the genes then paste them..........
+	  dtb$x=paste(dtb$a,dtb$b)
+	  dtb$y=paste(dtb$b,dtb$a)
+	  dumpty=list()
+	 k=nrow(dtb)
+	cat('\tremoving duplicate connectoins\n')
+	while(nrow(dtb)>0){
+	  humpty=dtb[which(dtb$x==dtb$x[1] | dtb$x==dtb$y[1] | dtb$y==dtb$y[1] | dtb$y==dtb$y[1]), ]
+	  dtb=dtb[-which(dtb$x==dtb$x[1] | dtb$x==dtb$y[1] | dtb$y==dtb$y[1] | dtb$y==dtb$y[1]), ]
 
-    dumpty[[paste(sort(unique(c(humpty$a,humpty$b))),collapse='_')]]=t(as.data.frame(list(
-          a=sort(unique(c(humpty$a,humpty$b)))[1]
-          ,b=sort(unique(c(humpty$a,humpty$b)))[2]
-          ,pcor=max(humpty$pcor)
-      )))
-        cat(round(1-nrow(dtb)/k,digits=2),'\r');flush.console()
-  }
-  cat('\n')
-  return(invisible(as.data.frame(t(as.data.frame(dumpty)))))
+		dumpty[[paste(sort(unique(c(humpty$a,humpty$b))),collapse='_')]]=t(as.data.frame(list(
+		      a=sort(unique(c(humpty$a,humpty$b)))[1]
+		      ,b=sort(unique(c(humpty$a,humpty$b)))[2]
+		      ,pcor=max(humpty$pcor)
+		  )))
+		  	cat(round(1-nrow(dtb)/k,digits=2),'\r');flush.console()
+	}
+	cat('\n')
+	return(invisible(as.data.frame(t(as.data.frame(dumpty)))))
 
-  ## if partial correl does not give all genes connections, it is feasible to add a single connection to missing genes based on max of correl
+	## if partial correl does not give all genes connections, it is feasible to add a single connection to missing genes based on max of correl
 } 
 
 
@@ -3428,13 +3568,13 @@ Library('WebGestaltR')
     stop(paste0('class(genset) is ',class(genset),', expect vector'))
   }
 
-
+# "pathway_KEGG",
 if(sum(enrichtype%in%c('go','pathw','other'))>0){
 ##  translate base keywords into WebGestalt query terms    --------------------------------------------------------------------------------------------------------------------------------
-full=c("geneontology_Biological_Process_noRedundant","geneontology_Cellular_Component_noRedundant","geneontology_Molecular_Function_noRedundant","pathway_KEGG","pathway_Panther","pathway_Reactome","pathway_Wikipathway","network_PPI_BIOGRID","network_miRNA_target","network_Transcription_Factor_target","chromosomalLocation_CytogenicBand","geneontology_Biological_Process","geneontology_Cellular_Component","geneontology_Molecular_Function","network_Kinase_target","disease_Disgenet","disease_GLAD4U","disease_OMIM","drug_DrugBank","drug_GLAD4U","phenotype_Human_Phenotype_Ontology","phenotype_Mammalian_Phenotype_Ontology")
+full=c("geneontology_Biological_Process_noRedundant","geneontology_Cellular_Component_noRedundant","geneontology_Molecular_Function_noRedundant","pathway_Panther","pathway_Reactome","pathway_Wikipathway","network_PPI_BIOGRID","network_miRNA_target","network_Transcription_Factor_target","chromosomalLocation_CytogenicBand","geneontology_Biological_Process","geneontology_Cellular_Component","geneontology_Molecular_Function","network_Kinase_target","disease_Disgenet","disease_GLAD4U","disease_OMIM","drug_DrugBank","drug_GLAD4U","phenotype_Human_Phenotype_Ontology","phenotype_Mammalian_Phenotype_Ontology")
 termkey=as.data.frame(full)
-termkey$spp=c("any","any","any","any","any","any","any","any","any","any","any","any","any","any","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","mmusculus")
-termkey$term=c("go","go","go","pathw","pathw","pathw","pathw","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other")
+termkey$spp=c("any","any","any","any","any","any","any","any","any","any","any","any","any","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","mmusculus")
+termkey$term=c("go","go","go","pathw","pathw","pathw","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other")
 
 if(quick){termkey=termkey[c(1,4,6,16),]}
 
@@ -4147,6 +4287,7 @@ annot.combine<-function(expr_mat,annot_mat,annot_from,annot_to,combine_method='m
   dupl=dupli$duplicates
 
   if(nrow(unic)>0){
+    print(1)
     ids=intersect(unic[,annot_from],rownames(expr_mat))
     expu=expr_mat[sort(ids),]
       rownames(unic)=unic[,annot_from]
@@ -4159,34 +4300,38 @@ annot.combine<-function(expr_mat,annot_mat,annot_from,annot_to,combine_method='m
      expr_out=expu
   }
 
-  udup=unlist(unique(dupl[,annot_to,drop=F]))
 
-  if(nrow(unic)!=nrow(expr_out)){
-  if(length(udup)>1){
-    cat('\n\tmerge',length(udup),'genes, using ',combine_method,' on all mapped probes :\n')
-#   idup=udup[5]
-    dupmed=list()
-    k=1
-    for(idup in udup){
-      humpty=expr_mat[as.character(dupl[dupl[,annot_to]==idup,annot_from]),]
 
-      if(combine_method=='median'){holder=apply(humpty,2,median,na.rm=T)}
-      if(combine_method=='mean'){holder=apply(humpty,2,mean,na.rm=T)}
-      if(combine_method=='sum'){holder=apply(humpty,2,sum,na.rm=T)}
-      
-      dupmed[[idup]]=holder
-#     dumpty=cor(humpty,holder)
-#     diag(dumpty)=NA
-#     dumpty=c(min(dumpty,na.rm=T),max(dumpty,na.rm=T),length(dumpty))
-#     cat('\t\t\t',paste(round(dumpty,digits=2),collapse=",\t"),'\n')
-      k=lcount(k,length(udup))
+  if((nrow(unic)!=nrow(expr_out)) | (dupl!="")){
+    print(2)
+      udup=unlist(unique(dupl[,annot_to,drop=F]))
+          print(udup)
+    if(length(udup)>1){
+      print(3)
+      cat('\n\tmerge',length(udup),'genes, using ',combine_method,' on all mapped probes :\n')
+  #   idup=udup[5]
+      dupmed=list()
+      k=1
+      for(idup in udup){
+        humpty=expr_mat[as.character(dupl[dupl[,annot_to]==idup,annot_from]),]
+
+        if(combine_method=='median'){holder=apply(humpty,2,median,na.rm=T)}
+        if(combine_method=='mean'){holder=apply(humpty,2,mean,na.rm=T)}
+        if(combine_method=='sum'){holder=apply(humpty,2,sum,na.rm=T)}
+        
+        dupmed[[idup]]=holder
+  #     dumpty=cor(humpty,holder)
+  #     diag(dumpty)=NA
+  #     dumpty=c(min(dumpty,na.rm=T),max(dumpty,na.rm=T),length(dumpty))
+  #     cat('\t\t\t',paste(round(dumpty,digits=2),collapse=",\t"),'\n')
+        k=lcount(k,length(udup))
+      }
+      dupfin=t(as.data.frame(dupmed))
+
+        rownames(dupfin)=names(dupmed)
+      expr_out=rbind(expu,dupfin)
+
     }
-    dupfin=t(as.data.frame(dupmed))
-
-      rownames(dupfin)=names(dupmed)
-    expr_out=rbind(expu,dupfin)
-
-  }
   }
 
     cat('\n\tfinal output contains',nrow(expr_out),' genes, ',round(nrow(expr_out)/nrow(expr_mat),digits=2)*100,'% of original input\n')
@@ -4810,5 +4955,90 @@ rm.duplicates<-function(matrix,colName,verbose=T){
     if(verbose){cat("     ",sum(duplicated(matrix[,which(colnames(matrix)==colName)]))," duplicates removed  || ",round(nrow(clean)/nrow(matrix),digits=3)*100,"% of data remaining || ",sum(duplicated(clean[,which(colnames(clean)==colName)])),"dupilicates remaining \n")}
 
   return(invisible(clean))
+}
+
+
+group.col<-function(dat_groups){
+  options(warn=-1)
+  if(length(dat_groups)>1){
+    datleg=Table(dat_groups)[,1:2]
+      colnames(datleg)=c('name','n')
+    datleg$color=colmix[1:nrow(datleg)]
+    datleg$point=pchmix[1:nrow(datleg)]
+
+    datcol=rep('magenta',length(dat_groups))
+    datpch=rep(10,length(dat_groups))
+  for(idat in 1:nrow(datleg)){
+    datcol[dat_groups==datleg$name[idat]]=datleg$color[idat]
+    datpch[dat_groups==datleg$name[idat]]=datleg$point[idat]
+    # datcol=c(datcol,rep(datleg$color[idat],datleg$n[idat]))
+    # datpch=c(datpch,rep(datleg$point[idat],datleg$n[idat]))
+  }
+    # datcol=datcol[-1]
+    datpch=as.numeric(datpch[-1])
+    dat_is_list=T
+  }
+  options(warn=0)
+  return(datcol)
+}
+
+
+eefnr<-function(dat_lis,dtb='default',phen=''){ #bkg,
+##  dtb - required list - DNM in 'conrols' ie healthy parents & offspring
+##   dnmDB - pre-made dataset, part of "adds" package, downloaded from http://denovo-db.gs.washington.edu/denovo-db/  ## mapped to HUGO gene ids, genes with DNM in controls removed from DNM in
+  if(dtb[1]=='default'){
+    # cat('\tLoad(~/Dropbox/PROJ/ednm/dtb/denovo-db.variants.v.1.5__frameshift_missense_stopgain.Rdata)\n')
+    Load('~/Dropbox/PROJ/epitar/methyl_51/dtb/ref/scz_GSE89702_3_5_6.mVals_bVals.GenomicRatioSet.Rdata')
+    print(str(efn))
+    # Load('~/Dropbox/PROJ/ednm/dtb/denovo-db.variants.v.1.5__frameshift_missense_stopgain.Rdata')
+    dtb=efn
+  }      ##  load pre-made dataset, part of "adds" package
+  if(!('control'%in%names(dtb))){stop('"control" - list of DNM in healthy controls && offspring (named "control") is required')}
+
+
+   cat('\tcheck DNM dtb and background compatibility\n')
+  # bkg=overlap(unlist(dtb),bkg)
+
+  # bkg=c(bkg$inter,bkg$inb)  ##  background is specified as overap && 'expressed' - ie have significant signal in the dataset used to derive the list
+  ## the above definition is the same as the "bkg" input by definiton..
+
+  dtb_contr=dtb$control
+  dtb=dtb[names(dtb)!='control']
+
+   cat('\n')
+  # str(bkg)
+  if(length(intersect(unlist(dtb),unlist(dat_lis)))==0){stop('check that dat_lis and bkg IDs are HUGO gene names OR match the provided dtb')}
+  # dtb=lapply(dtb,function(x){x[x%in%bkg]})
+  dnmen=list()
+  fetp=list()
+  cat('\n\nperform FET enrichment\n')
+  for(idnm in names(dtb)){
+    cat('\t',idnm)
+    holder=list()
+    for(idat in names(dat_lis)){
+      holder[[idat]]=unlist(fet(
+              # sampl=dat_lis[[idat]]
+              # ,bkgrnd=bkg
+              # ,success=dtb[[idnm]]
+              # ,
+              counts=T
+              ,samp.success=sum(dtb[[idnm]]%in%dat_lis[[idat]])
+              ,bkgrnd.success=sum(dtb_contr%in%dat_lis[[idat]])
+              ,samp.fail=sum(!(dtb[[idnm]]%in%dat_lis[[idat]]))
+              ,bkgrnd.fail=sum(!(dtb_contr%in%dat_lis[[idat]]))
+              ,tail='greater'
+              ))
+
+    }
+    dnmen[[idnm]]=as.data.frame(t(as.data.frame(holder)))
+    fetp[[idnm]]=dnmen[[idnm]]$FETp
+
+  }
+    cat('\n\n')
+
+  fetp=as.data.frame(fetp)
+    rownames(fetp)=names(dat_lis)
+
+  return(list(fetp=fetp,dnmen=dnmen))
 }
 
