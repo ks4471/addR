@@ -4287,7 +4287,7 @@ annot.combine<-function(expr_mat,annot_mat,annot_from,annot_to,combine_method='m
   dupl=dupli$duplicates
 
   if(nrow(unic)>0){
-    print(1)
+    # print(1)
     ids=intersect(unic[,annot_from],rownames(expr_mat))
     expu=expr_mat[sort(ids),]
       rownames(unic)=unic[,annot_from]
@@ -4303,11 +4303,11 @@ annot.combine<-function(expr_mat,annot_mat,annot_from,annot_to,combine_method='m
 
 
   if((nrow(unic)!=nrow(expr_out)) | (dupl!="")){
-    print(2)
+    # print(2)
       udup=unlist(unique(dupl[,annot_to,drop=F]))
           print(udup)
     if(length(udup)>1){
-      print(3)
+      # print(3)
       cat('\n\tmerge',length(udup),'genes, using ',combine_method,' on all mapped probes :\n')
   #   idup=udup[5]
       dupmed=list()
