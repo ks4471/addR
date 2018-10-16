@@ -3568,13 +3568,13 @@ Library('WebGestaltR')
     stop(paste0('class(genset) is ',class(genset),', expect vector'))
   }
 
-# "pathway_KEGG",
+
 if(sum(enrichtype%in%c('go','pathw','other'))>0){
 ##  translate base keywords into WebGestalt query terms    --------------------------------------------------------------------------------------------------------------------------------
-full=c("geneontology_Biological_Process_noRedundant","geneontology_Cellular_Component_noRedundant","geneontology_Molecular_Function_noRedundant","pathway_Panther","pathway_Reactome","pathway_Wikipathway","network_PPI_BIOGRID","network_miRNA_target","network_Transcription_Factor_target","chromosomalLocation_CytogenicBand","geneontology_Biological_Process","geneontology_Cellular_Component","geneontology_Molecular_Function","network_Kinase_target","disease_Disgenet","disease_GLAD4U","disease_OMIM","drug_DrugBank","drug_GLAD4U","phenotype_Human_Phenotype_Ontology","phenotype_Mammalian_Phenotype_Ontology")
+full=c("geneontology_Biological_Process_noRedundant","geneontology_Cellular_Component_noRedundant","geneontology_Molecular_Function_noRedundant","pathway_KEGG","pathway_Panther","pathway_Reactome","pathway_Wikipathway","network_PPI_BIOGRID","network_miRNA_target","network_Transcription_Factor_target","chromosomalLocation_CytogenicBand","geneontology_Biological_Process","geneontology_Cellular_Component","geneontology_Molecular_Function","network_Kinase_target","disease_Disgenet","disease_GLAD4U","disease_OMIM","drug_DrugBank","drug_GLAD4U","phenotype_Human_Phenotype_Ontology","phenotype_Mammalian_Phenotype_Ontology")
 termkey=as.data.frame(full)
-termkey$spp=c("any","any","any","any","any","any","any","any","any","any","any","any","any","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","mmusculus")
-termkey$term=c("go","go","go","pathw","pathw","pathw","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other")
+termkey$spp=c("any","any","any","any","any","any","any","any","any","any","any","any","any","any","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","hsapiens","mmusculus")
+termkey$term=c("go","go","go","pathw","pathw","pathw","pathw","other","other","other","other","other","other","other","other","other","other","other","other","other","other","other")
 
 if(quick){termkey=termkey[c(1,4,6,16),]}
 
@@ -3740,6 +3740,7 @@ print(enrichtype)
 
   return(invisible(enrichlis))
 }
+
 
 
 
@@ -4302,7 +4303,7 @@ annot.combine<-function(expr_mat,annot_mat,annot_from,annot_to,combine_method='m
 
 
 
-  if((nrow(unic)!=nrow(expr_out)) | (dupl!="")){
+  if((nrow(unic)!=nrow(expr_out)) ){  ##| (dupl!="")  ## will cause warnings, should be same as the alternative used
     # print(2)
       udup=unlist(unique(dupl[,annot_to,drop=F]))
           print(udup)
