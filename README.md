@@ -14,6 +14,8 @@ Please see the other repositories in on this account for details and instruction
 ```
 devtools::install_github("ks4471/addR")
 library(adds)
-```
 
+##Functions will try to automatically install libraries they need (if missing). This may not always work. If that is the case, try the command below to install all relevant dependencies in one go.
+install.dependencies()
+```
 
