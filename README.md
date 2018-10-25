@@ -11,7 +11,7 @@ Please see the other repositories in on this account for details and instruction
 
 
 ### Installation:
-requires devtools R package to be installed - install.packages('devtools')
+Requires devtools R package to be installed - install.packages('devtools')
 ```
 
 devtools::install_github("ks4471/addR")
