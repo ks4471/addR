@@ -1,5 +1,5 @@
 ## addR
-Collection of quality-of-life wrappers for a number of Bioinformatics tools, designed to streamline omics data quality control, analysis and visualisation. Functions include tools for principal component analysis, hierarchical clustering, covariate influence estimation, linear modelling and over-representation tests.
+Collection of quality-of-life functions and wrappers for a number of Bioinformatics tools, designed to streamline omics data quality control, analysis and visualisation. Functions include tools for principal component analysis, hierarchical clustering, covariate influence estimation, linear modelling and over-representation tests.
 
 Also includes custom functions to perform gene set enrichment tests using datasets from publicly available repositories
 - cell type enrichment *celltr()*                              https://github.com/ks4471/celltr
