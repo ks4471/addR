@@ -18,6 +18,12 @@
 # devtools::install_github("ks471/addR") #╗╣╠═╩╠╣╠╬═╚╬╗╩╩═║╚╝╝╣╠╗╗╠╔║╩╬╠╝╣╬╔╬╬╚╦╝╔╗╩╠╚╝╠═╝╝╦╔═╚╠╝╣║
 #╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩╩═╝
 
+#╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╔╦╦╗
+# options(stringsAsFactors=F);library(colorout);rm(list=ls());ls()#╚═╣║ ╚╣║¯\_(•_•)_/¯║╚╣╔╣╔╣║║║║╚╣
+# options(menu.graphics=FALSE);library(adds) #╔╦═╣═╩╚╣║╔╔╣╦═║║╔╚║╔╚╔╣╩╚╚╦╣║╩╔╦║║ ╚╩╣╚╚╣║╣╚╩╔╦╩╚╦╚╩╣
+#╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═══╩╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩╩═╝
+
+
 
 #### <*=-=*> ####
 
@@ -312,7 +318,7 @@ Load<-function(obj_path,...){
 
 
 read.file<-function(file,...){
-  read.table(file=file,quote = "",colClasses = "character",check.names=F,comment.char="",...)
+  read.table(file=file,quote="",colClasses="character",check.names=F,comment.char="",...)
 }
 
 
@@ -341,7 +347,7 @@ read.zip <- function(file,verbose=T,...){
 
 
 lcount<-function(k,length){
-    cat('\t',k,'\t',round(k/length, digits = 2), "\r");flush.console()
+    cat('\t',k,'\t',round(k/length, digits=2), "\r");flush.console()
     return(k + 1)
 }
 
@@ -704,7 +710,7 @@ par(mai=c(3.02,1.82,0.82,0.42))
     # print(col)
     # print(Head(dat_mat))
     # if(length(col)!=nrow(dat_mat) ){col='corflowerblue'}
-    stripchart(dat_mat, vertical = TRUE,  method = "jitter", add = TRUE, pch = 20, col = col)
+    stripchart(dat_mat, vertical=TRUE,  method="jitter", add=TRUE, pch=20, col=col)
   }
   # if(points & text){
   #   text(dat_mat, 1.1, labels=dat_mat)
@@ -799,7 +805,7 @@ boxplot.outlier<-function(y,label_name,...,spread_text=T,data,plot=T,range=4,lab
     return(invisible())
     }
 
-  stripchart(y, vertical = TRUE,  method = "jitter", add = TRUE, pch = 20, col = 'dodgerblue')
+  stripchart(y, vertical=TRUE,  method="jitter", add=TRUE, pch=20, col='dodgerblue')
   if(!missing(data)) attach(data) # this might lead to problams I should check out for alternatives for using attach here...
   
 
@@ -952,8 +958,16 @@ start_par=par()
 # cat('\t',yplot,col,xlim,ylim,'\n')
 # cat('\t',yplot,col,pch,frame.plot,'\n')
 
-	if(!yplot){plot(x=xdat,pch=16,col=rgb(0, 0, 0,alpha=0.2),frame.plot=F,...)}
-	if(yplot){plot(x=xdat,y=ydat,pch=16,col=rgb(0, 0, 0,alpha=0.2),frame.plot=F,...)}
+  if(abline){
+    # print(xdat)
+    print('abline(lm(xdat~ydat))')
+    plot(xdat~ydat,pch=16,col=rgb(0, 0, 0,alpha=0.2),frame.plot=F,...)
+    abline(lm(xdat~ydat),col='cornflowerblue',lwd=3)
+  }
+  if(!abline){
+  	if(!yplot){plot(x=xdat,pch=16,col=rgb(0, 0, 0,alpha=0.2),frame.plot=F,...)}
+  	if(yplot){plot(x=xdat,y=ydat,pch=16,col=rgb(0, 0, 0,alpha=0.2),frame.plot=F,...)}
+  }
 	if(line45deg){abline(coef=c(0,1),lty=2,col='grey60')}
   if(length(labels)>1){text(xdat,ydat,labels=rownames(xdat))}
   options(warn=-1)
@@ -964,8 +978,48 @@ start_par=par()
 
 
 
+lmplot<-function(fit,xlab='',ylab='',dat_groups=NULL){
+'expect fit=lm(Sepal.Length ~ Petal.Width, data=iris)'
+#https://sejohnston.com/2012/08/09/a-quick-and-easy-function-to-plot-lm-results-in-r/
+Library('ggplot2')
+
+
+  if(xlab==''){xlab=names(fit$model)[2]}
+  if(ylab==''){ylab=names(fit$model)[1]}
+  gdat=ggplot(fit$model, aes_string(x=names(fit$model)[2], y=names(fit$model)[1]) ) + 
+    geom_point()+
+    stat_smooth(method="lm", col="cornflowerblue") +
+    labs(
+      x=xlab,
+      y=ylab,
+      title=paste("Adj R2 =",
+        round(signif(summary(fit)$adj.r.squared, 5),digits=2)
+        ,
+                  " Intercept =",(signif(fit$coef[[1]],5 )),
+                  " Slope =",signif(fit$coef[[2]], 5),
+                  " P =",signif(summary(fit)$coef[2,4], 5))
+      ) +
+      theme_classic(base_size=12) +
+      theme(axis.text=element_text(size=12),
+        # axis.title=element_text(size=14,face="bold")
+        )
+
+
+  if(!is.null(dat_groups)){
+    print(str(dat_groups))
+    gdat+labs(
+      color=(dat_groups))
+      return(gdat)
+    }
+}
+
+
+
+
 plot.mat<-function(dat_mat,method='spearman',lm=T,...){
-  Library('psych')
+'cex.cor=1  ## variable to increase font of correlation'
+    Library('psych')
+
     pairs.panels(dat_mat,method=method,lm=lm,...)
 }
 
@@ -1079,9 +1133,9 @@ lheight=c(0.06,0.94)
     heatmap.2(-log10(pval_mat),margins=margin,lhei=lheight,col=colorRampPalette(c("white","#ffffbf","#fee090","#fdae61","#f46d43","#d73027","#a50026","darkred"))(101),breaks=seq(0,max(-log10(pval_mat)),length=(102)),tracecol=F,dendrogram="none",Rowv=F,Colv=F,density.info="none",keysize=1,cexCol=0.7,cexRow=0.7,symkey=F,lwid=c(0.7,0.3),lmat=rbind(c(4,3),c(1,2)))
   }
   ## text in top right corner
-  par(xpd = NA)
-  mtext(dat_descr, adj = 1, side = 3)
-  par(xpd = F)
+  par(xpd=NA)
+  mtext(dat_descr, adj=1, side=3)
+  par(xpd=F)
 }
 
 
@@ -1117,7 +1171,7 @@ gestaltheat<-function(dat_mat,dat_descr='',multi_page=T){
 Venn<-function(dat_lis,dat_descr='',...){
 ##  calculate proportional overlaps for Venn Diagram
 ##  dat_lis - named lists of items   list(first=c(gene1,gene2),second=c(gene2,gene3))
-##   + for some reason plotting does not seem to work within the function, use the returned 'fit' obj to  plot(fit, fill_opacity = 0.3,counts=T)
+##   + for some reason plotting does not seem to work within the function, use the returned 'fit' obj to  plot(fit, fill_opacity=0.3,counts=T)
 Library('eulerr')
 
 # if(length(dat_lis)>3){stop('currently only able to handle lists of 3 or less')}
@@ -1140,11 +1194,11 @@ nlaps=list()
 
 # ?plot.euler
 # ## S3 method for class 'euler'
-#      plot(x, fill = qualpalr_pal, fill_alpha = 0.4,
-#        auto.key = FALSE, counts = FALSE, labels = is.logical(auto.key) &&
-#        !isTRUE(auto.key), fontface = "bold", par.settings = list(), ...,
-#        default.prepanel = prepanel.euler, default.scales = list(draw = FALSE),
-#        panel = panel.euler, outer_strips, fill_opacity)
+#      plot(x, fill=qualpalr_pal, fill_alpha=0.4,
+#        auto.key=FALSE, counts=FALSE, labels=is.logical(auto.key) &&
+#        !isTRUE(auto.key), fontface="bold", par.settings=list(), ...,
+#        default.prepanel=prepanel.euler, default.scales=list(draw=FALSE),
+#        panel=panel.euler, outer_strips, fill_opacity)
   return(list(nlaps=nlaps,plot=pdat,fit=fit))
 }
 
@@ -1297,18 +1351,18 @@ pdat=as.data.frame(pcs[,c(colnames(pcs)[ipc], colnames(pcs)[ipc+1])])
 
 if(samp_labels){
   print(
-      # ggplot(as.data.frame(pcs), aes_string(colnames(pcs)[ipc], colnames(pcs)[ipc+1], label = 'rownames(pcs)') +
+      # ggplot(as.data.frame(pcs), aes_string(colnames(pcs)[ipc], colnames(pcs)[ipc+1], label='rownames(pcs)') +
       ggplot(pdat,aes(x,y,label=rownames(pdat))) +
-      geom_point(color = datcol) +
+      geom_point(color=datcol) +
       geom_text_repel(color=datcol) +
       theme_classic(base_size=16)
         )}
 
 if(!samp_labels){
   print(
-      # ggplot(as.data.frame(pcs), aes_string(colnames(pcs)[ipc], colnames(pcs)[ipc+1], label = 'rownames(pcs)') +
+      # ggplot(as.data.frame(pcs), aes_string(colnames(pcs)[ipc], colnames(pcs)[ipc+1], label='rownames(pcs)') +
       ggplot(pdat,aes(x,y,label=rownames(pdat))) +
-      geom_point(color = datcol) +
+      geom_point(color=datcol) +
       # geom_text_repel(color=datcol) +
       theme_classic(base_size=16)
         )}
@@ -1754,8 +1808,8 @@ if(length(mth)==2){
 }
 
 ####  a mediocre toy dataset to show bimodal distribution
-##x=matrix(rnorm(9000, mean = 0, sd = 0.5),ncol=3)
-##y=matrix(rnorm(27000, mean = 5, sd = 4),ncol=3)
+##x=matrix(rnorm(9000, mean=0, sd=0.5),ncol=3)
+##y=matrix(rnorm(27000, mean=5, sd=4),ncol=3)
 ##z=rbind(x,y)
 ##deconv(z,T)
 
@@ -2549,7 +2603,7 @@ ivar=colnames(desm)[grepl(contrast[1],colnames(desm))]
 
 
 degsv<-function(
-  contmat               ##  raw counts matrix (samples = columns)
+  contmat               ##  raw counts matrix (samples=columns)
   ,datcov               ##  all covariates AND group variable (assumes no irrelevant vars in there)
   ,datgrp               ##  required input eg =c('genotype','ko')   ##  column to use for groups and name of controls (ie the variable to calculate topGenes wrt)
   ,nsvafac=NULL           ##  NULL - caclulates 'optimum number', can overwrite but may give weird / uninformative errors (decrease n factors to fix), some sort of relationship with n.samples & covars ~ degrees of freedom
@@ -2772,7 +2826,7 @@ gsea.enrich<-function(genlis,rnkdat,dat_descr='',gsea_path="/Data/ks/gsea_lib1/"
 
 
 ##  INPUT : genlis      - named list of gene sets to use for enrichment  list(setA=c('gene1','gene2','gene3'))
-##  INPUT : rnkdat      - ranked list of genes - autodetect 2 possible input types   1. rows=genes, single column of rank info  2. column1 =genes, column2 = rank info
+##  INPUT : rnkdat      - ranked list of genes - autodetect 2 possible input types   1. rows=genes, single column of rank info  2. column1 =genes, column2=rank info
 ##  OUTPUT              - the function will produce an R object containg all relevant enrichment informatioin
 
 
@@ -2802,7 +2856,7 @@ sink()
 	if(!ncol(rnkdat)%in%c(1,2)){stop('rnkdat does not have 2 coluns')}
 	if(ncol(rnkdat)==2){
 		bkg=rnkdat[,1]
-		cat('\tncol(rnkdat)==2, assuming rnkdat already in correct format colnames = c("IDs","P"), where P==rank measure\n')
+		cat('\tncol(rnkdat)==2, assuming rnkdat already in correct format colnames=c("IDs","P"), where P==rank measure\n')
 #		write.file(rnkdat,file=paste0(gsea_path,'/working/',dat_descr,'gsea_enrich.rnk'),row.names=F,col.names=T)
     if(sum(grepl('Inf|NA|NaN',rnkdat[,2]))>0){stop('rnkdat contains one of these values: "Inf", "NA", "NaN" ')}
 		write.file(rnkdat,file=paste0(gsea_path,'/working/gsea_enrich.rnk'),row.names=F,col.names=T)
@@ -2869,7 +2923,7 @@ sidat=list()
 
   		ylimdat=c(min(holder$RUNNING.ES)-0.1,(max(holder$RUNNING.ES)))
 		plot(x=holder$RANK.IN.GENE.LIST,y=holder$RUNNING.ES,type='l',lwd=4,col='darkgreen',frame.plot=F,ylim=ylimdat,main=paste0(isig,'\n',dat_descr),las=1,xlab='rank in gene list',ylab='GSEA enrichment score',...) #ylim=ylimdat
-		rug(x=holder$RANK.IN.GENE.LIST, ticksize = 0.1, side = 1, lwd = 0.5, col = par("fg"),quiet = getOption("warn") < 0)
+		rug(x=holder$RANK.IN.GENE.LIST, ticksize=0.1, side=1, lwd=0.5, col=par("fg"),quiet=getOption("warn") < 0)
 
 		mtext(paste0('FDR pos  ',humpty[humpty$NAME==isig,]$FDR.q.val,'   FDR neg   ',dumpty[dumpty$NAME==isig,]$FDR.q.val),adj=1,side=1,line=4)
 	}
@@ -3252,13 +3306,13 @@ if(dat_descr!=''){mstat$module=paste(mstat$module,dat_descr,sep="_")}   ##  add 
 #      lprogr(ireg,names(dat_lis))
 #     multiExpr[[ireg]]$data=t(dat_lis[[ireg]])
 # #    if(adjcal=='man'){
-#       sinad[[ireg]]=cor(t(dat_lis[[ireg]]), method = cor.method)                  ##                                                        <<<<•••••••••••>>>>
+#       sinad[[ireg]]=cor(t(dat_lis[[ireg]]), method=cor.method)                  ##                                                        <<<<•••••••••••>>>>
 #     # }
 #     # if(adjcal!='man'){
-#       sinad[[ireg]]=adjacency.fromSimilarity(sinad[[ireg]],type = 'signed hybrid',power=power)   ##  adjacency.fromSimilarity -> same TOM as using ((1+cormat)/2)^power
+#       sinad[[ireg]]=adjacency.fromSimilarity(sinad[[ireg]],type='signed hybrid',power=power)   ##  adjacency.fromSimilarity -> same TOM as using ((1+cormat)/2)^power
 #     # }
-#     # adjac[[ireg]]=adjacency(sinad[[ireg]],type = net.type,power=power,corFnc = "I", corOptions = "", distFnc = "I", distOptions = "")             ##  WGCNA function to calculate 'correct'
-#     # adjac[[ireg]]=adjacency.fromSimilarity(sinad[[ireg]],type = net.type,power=power)   ##  the above adjacency options come from inspecting this function code
+#     # adjac[[ireg]]=adjacency(sinad[[ireg]],type=net.type,power=power,corFnc="I", corOptions="", distFnc="I", distOptions="")             ##  WGCNA function to calculate 'correct'
+#     # adjac[[ireg]]=adjacency.fromSimilarity(sinad[[ireg]],type=net.type,power=power)   ##  the above adjacency options come from inspecting this function code
 
 #   }
 
@@ -3268,9 +3322,9 @@ if(dat_descr!=''){mstat$module=paste(mstat$module,dat_descr,sep="_")}   ##  add 
 #   sintom=list()
 #   for(ireg in names(dat_lis)){
 #      lprogr(ireg,names(dat_lis))
-#     # sintom[[ireg]]=TOMsimilarity(((1+sinad[[ireg]])/2)^power,TOMType = 'signed')    ##  for cor(t(dat_lis[[ireg]]), method = cor.method)    <<<<•••••••••••>>>>
-#    # sintom[[ireg]]=TOMsimilarity(abs(sinad[[ireg]])^power,TOMType = 'unsigned')
-#       sintom[[ireg]]=TOMsimilarity((sinad[[ireg]]),TOMType = 'signed')
+#     # sintom[[ireg]]=TOMsimilarity(((1+sinad[[ireg]])/2)^power,TOMType='signed')    ##  for cor(t(dat_lis[[ireg]]), method=cor.method)    <<<<•••••••••••>>>>
+#    # sintom[[ireg]]=TOMsimilarity(abs(sinad[[ireg]])^power,TOMType='unsigned')
+#       sintom[[ireg]]=TOMsimilarity((sinad[[ireg]]),TOMType='signed')
 #     gc()
 #   }
 
@@ -3289,7 +3343,7 @@ if(dat_descr!=''){mstat$module=paste(mstat$module,dat_descr,sep="_")}   ##  add 
 # ## 2.a.6 Clustering and module identification
 # ## We use the consensus TOM as input to hierarchical clustering, and identify modules in the resulting dendrogram using the Dynamic Tree Cut algorithm [1]
 # cat('\thierarchical clustering using "average"\n')
-#   sinconsTree = hclust(as.dist(1-sinconstom), method = "average")
+#   sinconsTree=hclust(as.dist(1-sinconstom), method="average")
 
 # ## Module identification using dynamic tree cut:
 #   sinclust=cutreeDynamic(
@@ -3298,7 +3352,7 @@ if(dat_descr!=''){mstat$module=paste(mstat$module,dat_descr,sep="_")}   ##  add 
 #       ,deepSplit=2
 #       # ,cutHeight=0.995
 #       ,minClusterSize=minModSize
-#       ,pamRespectsDendro = FALSE
+#       ,pamRespectsDendro=FALSE
 #       )
 
 # ##  unmerged module gene lists
@@ -3322,7 +3376,7 @@ if(dat_descr!=''){mstat$module=paste(mstat$module,dat_descr,sep="_")}   ##  add 
 # if(length(sintom)==1){
 #     cat('\tstandard WGCNA : apply k-means clustering (alternative module assignment to "cutreeDynamic")\n')
 #   if(kmm){
-#     net = applykM2WGCNA(net.label=dat_descr, net.file=holder, expr.data=t(dat_lis[[1]]), job.path=km_path, meg=0,beta = power,tom.matrix=sintom[[1]],plot.evolution=F,plot.go=F)
+#     net=applykM2WGCNA(net.label=dat_descr, net.file=holder, expr.data=t(dat_lis[[1]]), job.path=km_path, meg=0,beta=power,tom.matrix=sintom[[1]],plot.evolution=F,plot.go=F)
 
 #     # kmme=net$MEs
 
@@ -3390,13 +3444,13 @@ cat('\n\tcalculate "signed hybrid" adjacency matrix using ',cor.method,' correla
      lprogr(ireg,names(dat_lis))
     multiExpr[[ireg]]$data=t(dat_lis[[ireg]])
 #    if(adjcal=='man'){
-      sinad[[ireg]]=cor(t(dat_lis[[ireg]]), method = cor.method)                  ##                                                        <<<<•••••••••••>>>>
+      sinad[[ireg]]=cor(t(dat_lis[[ireg]]), method=cor.method)                  ##                                                        <<<<•••••••••••>>>>
     # }
     # if(adjcal!='man'){
-      sinad[[ireg]]=adjacency.fromSimilarity(sinad[[ireg]],type = 'signed hybrid',power=pow_lis[[ireg]])   ##  adjacency.fromSimilarity -> same TOM as using ((1+cormat)/2)^power
+      sinad[[ireg]]=adjacency.fromSimilarity(sinad[[ireg]],type='signed hybrid',power=pow_lis[[ireg]])   ##  adjacency.fromSimilarity -> same TOM as using ((1+cormat)/2)^power
     # }
-    # adjac[[ireg]]=adjacency(sinad[[ireg]],type = net.type,power=power,corFnc = "I", corOptions = "", distFnc = "I", distOptions = "")             ##  WGCNA function to calculate 'correct'
-    # adjac[[ireg]]=adjacency.fromSimilarity(sinad[[ireg]],type = net.type,power=power)   ##  the above adjacency options come from inspecting this function code
+    # adjac[[ireg]]=adjacency(sinad[[ireg]],type=net.type,power=power,corFnc="I", corOptions="", distFnc="I", distOptions="")             ##  WGCNA function to calculate 'correct'
+    # adjac[[ireg]]=adjacency.fromSimilarity(sinad[[ireg]],type=net.type,power=power)   ##  the above adjacency options come from inspecting this function code
 
   }
 
@@ -3406,9 +3460,9 @@ cat('\tcalculate Topological Overlap - signed\n')
   sintom=list()
   for(ireg in names(dat_lis)){
      lprogr(ireg,names(dat_lis))
-    # sintom[[ireg]]=TOMsimilarity(((1+sinad[[ireg]])/2)^power,TOMType = 'signed')    ##  for cor(t(dat_lis[[ireg]]), method = cor.method)    <<<<•••••••••••>>>>
-   # sintom[[ireg]]=TOMsimilarity(abs(sinad[[ireg]])^power,TOMType = 'unsigned')
-      sintom[[ireg]]=TOMsimilarity((sinad[[ireg]]),TOMType = 'signed')
+    # sintom[[ireg]]=TOMsimilarity(((1+sinad[[ireg]])/2)^power,TOMType='signed')    ##  for cor(t(dat_lis[[ireg]]), method=cor.method)    <<<<•••••••••••>>>>
+   # sintom[[ireg]]=TOMsimilarity(abs(sinad[[ireg]])^power,TOMType='unsigned')
+      sintom[[ireg]]=TOMsimilarity((sinad[[ireg]]),TOMType='signed')
     gc()
   }
 
@@ -3427,7 +3481,7 @@ if(length(sintom)>1){
 ## 3. Clustering and module identification
 ## We use the consensus TOM as input to hierarchical clustering, and identify modules in the resulting dendrogram using the Dynamic Tree Cut algorithm [1]
 cat('\thierarchical clustering using "average"\n')
-  sinconsTree = hclust(as.dist(1-sinconstom), method = "average")
+  sinconsTree=hclust(as.dist(1-sinconstom), method="average")
 
 ## Module identification using dynamic tree cut:
   sinclust=cutreeDynamic(
@@ -3436,7 +3490,7 @@ cat('\thierarchical clustering using "average"\n')
       ,deepSplit=2
       # ,cutHeight=0.995
       ,minClusterSize=minModSize
-      ,pamRespectsDendro = FALSE
+      ,pamRespectsDendro=FALSE
       )
 
 ##  unmerged module gene lists
@@ -3478,8 +3532,8 @@ kmd=''
 if(length(sintom)==1){
     cat('\tstandard WGCNA : apply k-means clustering (alternative module assignment to "cutreeDynamic")\n')
   if(kmm){
-    net = applykM2WGCNA(net.label=dat_descr, net.file=holder, expr.data=t(dat_lis[[1]]), job.path=kmm_path, meg=0,beta = pow_lis[[1]],tom.matrix=sintom[[1]],plot.evolution=F,plot.go=F)
-    # net = applykM2WGCNA(net.label=dat_descr, net.file=holder, expr.data=t(dat_lis[[1]]), job.path=km_path, meg=0,beta = power,tom.matrix=sintom[[1]],plot.evolution=F,plot.go=F)
+    net=applykM2WGCNA(net.label=dat_descr, net.file=holder, expr.data=t(dat_lis[[1]]), job.path=kmm_path, meg=0,beta=pow_lis[[1]],tom.matrix=sintom[[1]],plot.evolution=F,plot.go=F)
+    # net=applykM2WGCNA(net.label=dat_descr, net.file=holder, expr.data=t(dat_lis[[1]]), job.path=km_path, meg=0,beta=power,tom.matrix=sintom[[1]],plot.evolution=F,plot.go=F)
     # kmme=net$MEs
 
     dummy=net$moduleLabels
@@ -3918,14 +3972,14 @@ webg.plot<-function(webg_list,do_plots=F,zero_replace=1e-20,p_thresh=0.1){
 #       # nsuccs=mstat[[paste(idru,'down_upreg',sep='.')]][1:2]+mstat[[paste(idru,'up_downreg',sep='.')]][1:2]
 #       nsuccs=mstat[[idru]]$down_upreg[1:2]+mstat[[idru]]$up_downreg[1:2]
 #       nfails=c(length(unique(unlist(modg)))-nsuccs[1],nrow(holder$bkg)-nsuccs[2])
-#       # mstat[[paste(idru,'reverse',sep='.')]]=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail = "greater",counts=T))
-#       mstat[[idru]]$reverse=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail = "greater",counts=T))
+#       # mstat[[paste(idru,'reverse',sep='.')]]=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail="greater",counts=T))
+#       mstat[[idru]]$reverse=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail="greater",counts=T))
 
 #       # nsuccs=mstat[[paste(idru,'down_downreg',sep='.')]][1:2]+mstat[[paste(idru,'up_upreg',sep='.')]][1:2]
 #       nsuccs=mstat[[idru]]$down_downreg[1:2]+mstat[[idru]]$up_upreg[1:2]
 #       nfails=c(length(unique(unlist(modg)))-nsuccs[1],nrow(holder$bkg)-nsuccs[2])
-#       # mstat[[paste(idru,'mimic',sep='.')]]  =unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail = "greater",counts=T))
-#       mstat[[idru]]$mimic=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail = "greater",counts=T))
+#       # mstat[[paste(idru,'mimic',sep='.')]]  =unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail="greater",counts=T))
+#       mstat[[idru]]$mimic=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail="greater",counts=T))
 
 
 #     }
@@ -4089,26 +4143,26 @@ for(idru in names(degdb)){
       # nsuccs=mstat[[paste(idru,'down_upreg',sep='.')]][1:2]+mstat[[paste(idru,'up_downreg',sep='.')]][1:2]
       nsuccs=mstat[[idru]]$down_upreg[1:2]+mstat[[idru]]$up_downreg[1:2]
       nfails=c(length(unique(unlist(modg)))-nsuccs[1],nrow(holder$bkg)-nsuccs[2])
-      # mstat[[paste(idru,'reverse',sep='.')]]=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail = "greater",counts=T))
-      mstat[[idru]]$reverse=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail = "greater",counts=T))
+      # mstat[[paste(idru,'reverse',sep='.')]]=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail="greater",counts=T))
+      mstat[[idru]]$reverse=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail="greater",counts=T))
 
 
       nsuclf=mlfcw[[idru]]$down_upreg[1:2]+mlfcw[[idru]]$up_downreg[1:2]
       nfailf=c(length(unique(unlist(modg)))-nsuclf[1],nrow(holder$bkg)-nsuclf[2])
 
-      mlfcw[[idru]]$reverse=unlist(fet(samp.success=nsuclf[1], bkgrnd.success=nsuclf[2], samp.fail=nfailf[1], bkgrnd.fail=nfailf[2], tail = "greater",counts=T))
+      mlfcw[[idru]]$reverse=unlist(fet(samp.success=nsuclf[1], bkgrnd.success=nsuclf[2], samp.fail=nfailf[1], bkgrnd.fail=nfailf[2], tail="greater",counts=T))
 
 
       # nsuccs=mstat[[paste(idru,'down_downreg',sep='.')]][1:2]+mstat[[paste(idru,'up_upreg',sep='.')]][1:2]
       nsuccs=mstat[[idru]]$down_downreg[1:2]+mstat[[idru]]$up_upreg[1:2]
       nfails=c(length(unique(unlist(modg)))-nsuccs[1],nrow(holder$bkg)-nsuccs[2])
-      # mstat[[paste(idru,'mimic',sep='.')]]  =unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail = "greater",counts=T))
-      mstat[[idru]]$mimic=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail = "greater",counts=T))
+      # mstat[[paste(idru,'mimic',sep='.')]]  =unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail="greater",counts=T))
+      mstat[[idru]]$mimic=unlist(fet(samp.success=nsuccs[1], bkgrnd.success=nsuccs[2], samp.fail=nfails[1], bkgrnd.fail=nfails[2], tail="greater",counts=T))
 
       nsuclf=mlfcw[[idru]]$down_downreg[1:2]+mlfcw[[idru]]$up_upreg[1:2]
       nfailf=c(length(unique(unlist(modg)))-nsuclf[1],nrow(holder$bkg)-nsuclf[2])
 
-      mlfcw[[idru]]$mimic=unlist(fet(samp.success=nsuclf[1], bkgrnd.success=nsuclf[2], samp.fail=nfailf[1], bkgrnd.fail=nfailf[2], tail = "greater",counts=T))
+      mlfcw[[idru]]$mimic=unlist(fet(samp.success=nsuclf[1], bkgrnd.success=nsuclf[2], samp.fail=nfailf[1], bkgrnd.fail=nfailf[2], tail="greater",counts=T))
     }
   }
   k=lcount(k,length(degdb))
@@ -4381,8 +4435,8 @@ annot.combine<-function(expr_mat,annot_mat,annot_from,annot_to,combine_method='m
 #       }
 
 #       if(do.fet){
-#         matpv[ilis,jlis]=fet(sampl=humpty,bkgrnd=unions,success=inters,counts=F,tail = 'greater')$FETp
-# #       matpv[ilis,jlis]=fet(sampl=dumpty,bkgrnd=unions,success=inters,counts=F,alternative = "greater")$FETp
+#         matpv[ilis,jlis]=fet(sampl=humpty,bkgrnd=unions,success=inters,counts=F,tail='greater')$FETp
+# #       matpv[ilis,jlis]=fet(sampl=dumpty,bkgrnd=unions,success=inters,counts=F,alternative="greater")$FETp
 #       }
 #     }
 #   }
@@ -4639,8 +4693,8 @@ list.overlap<-function(alis,blis='',do.pcs=T,do.fet=T,verbose=T,do_plots=F,...){
       }
 
       if(do.fet){
-        matpv[ilis,jlis]=fet(sampl=humpty,bkgrnd=unions,success=inters,counts=F,tail = "greater")$FETp
-#       matpv[ilis,jlis]=fet(sampl=dumpty,bkgrnd=unions,success=inters,counts=F,tail = "greater")$FETp
+        matpv[ilis,jlis]=fet(sampl=humpty,bkgrnd=unions,success=inters,counts=F,tail="greater")$FETp
+#       matpv[ilis,jlis]=fet(sampl=dumpty,bkgrnd=unions,success=inters,counts=F,tail="greater")$FETp
       }
 
     }
