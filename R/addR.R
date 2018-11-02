@@ -38,8 +38,9 @@
 # options(stringsAsFactors=F);library(colorout);rm(list=ls());ls()#╚═╣║ ╚╣║¯\_(•_•)_/¯║╚╣╔╣╔╣║║║║╚╣
 # options(menu.graphics=F)  #═╦╩╬╝╚╬╬╚╗═╚╩╗═╩╠╬╝╔╚╗╬╚║╣══╣╦╬╬╗╠╔╗╔╣╣╝╝╣╠╔╠╚╔╔═╦╩╬╣╦╣╔╚╬╦╣╩╬╚╩╗╣╝╚╠╣
 # library('adds') #╔╦╣═╩╚╣║╔╔╣╦═║║╔╗║╔╚╔╣╩╚╚╦╣║╩╔╦║║ ╚╩╣╚╚╣║╣╚╩╔╦╩╚╦╚╩╣╬╝╚╗╔╝╬╚╝ ╔╣═╦╦╦╩╠╔╠╗╔╝╚═╗╩║
-# devtools::install_github("ks471/addR") #╗╣╠═╩╠╣╠╬═╚╬╗╩╩═║╚╝╝╣╠╗╗╠╔║╩╬╠╝╣╬╔╬╬╚╦╝╔╗╩╠╚╝╠═╝╝╦╔═╚╠╝╣║
+# devtools::install_github("ks4471/addR")#╠╩╠╣╠╬═╚╬╗╩╩═║╚╝╝╣╠╗╗╠╔║╩╬╠╝╣╬╔╬╬╚╦╝╔╗╩╠╚╝╠═╝╝╦╔═╚╠╝╣║║
 #╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩╩═╝
+
 #### <*=-=*> ####
 ####■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 
@@ -993,12 +994,41 @@ plot.mat<-function(dat_mat,method='spearman',lm=T,...){
 'cex.cor=1  ## variable to increase font of correlation'
     Library('psych')
 
-    pairs.panels(dat_mat,method=method,lm=lm,...)
+    dummy=pairs.panels(dat_mat,method=method,lm=lm,...)
+    return(invisible(dummy))
 }
 
 
 
-Heat<-function(dat_mat,values='',values.rm='',margin=c(10,10),Rowv=T,Colv=T,mingrey=F,values.cex=1,ncols=101,cexrow=0.7,cexcol=0.7,dendrogram="both",verbose=F,...){
+psig<-function(dat_mat,type='pval'){
+'type=="pval" - expect a matrix/data.frame of P-values
+type=="log10" for -log10(P-values) - to avoid back conversion'
+
+  dat_sig=as.data.frame(dat_mat)
+  if(type=='pval'){
+    dat_sig[dat_mat<=1e-5]="****"
+    dat_sig[dat_mat<=1e-4 & dat_mat>1e-5]="***"
+    dat_sig[dat_mat<=1e-3 & dat_mat>1e-4]="**"
+    dat_sig[dat_mat<=1e-2 & dat_mat>1e-3]="*"
+    dat_sig[dat_mat<= (0.05) & dat_mat>1e-2]="+"
+    dat_sig[dat_mat> (0.05)]=""
+  }
+
+  if(type=='log10'){
+      dat_sig[dat_mat>=5]="****"
+      dat_sig[dat_mat>=4 & dat_mat<5]="***"
+      dat_sig[dat_mat>=3 & dat_mat<4]="**"
+      dat_sig[dat_mat>=2 & dat_mat<3]="*"
+      dat_sig[dat_mat>= -log10(0.05) & dat_mat<2]="+"
+      dat_sig[dat_mat< -log10(0.05)]=""
+  }
+
+  return(dat_sig)
+}
+
+
+
+Heat<-function(dat_mat,celdat=NULL,values='',values.rm='',margin=c(10,10),Rowv=T,Colv=T,mingrey=F,values.cex=1,ncols=101,cexrow=1,cexcol=1,dendrogram="both",verbose=F,...){
 # plot.new()
 start_par=par()
   par(oma=c(0, 0, 0, 0), mar=c(0, 0, 0, 0))
@@ -1031,6 +1061,7 @@ start_par=par()
     if(values.rm!=''){celdat[celdat%in%values.rm]=''}
     cor_heat=heatmap.2((dat_mat),cellnote=celdat,notecex=values.cex,notecol="black",breaks=seq(min,max,length=(ncols+2)),col=heat_colors,trace="none",dendrogram=dendrogram,Rowv=Rowv,Colv=Colv,margins=margin,density.info="none",keysize=1,cexCol=cexcol,cexRow=cexrow,symkey=T,hclustfun=function(x) hclust(x, method="ward.D2"),...)
   }
+
   if(values=='pval'){
       celdat=as.data.frame(dat_mat)
       celdat[dat_mat>=5]="****"
@@ -1041,11 +1072,10 @@ start_par=par()
       celdat[dat_mat< -log10(0.05)]=""
     cor_heat=heatmap.2((dat_mat),cellnote=celdat,notecex=values.cex,notecol="black",breaks=seq(min,max,length=(ncols+2)),col=heat_colors,trace="none",dendrogram=dendrogram,Rowv=Rowv,Colv=Colv,margins=margin,density.info="none",keysize=1,cexCol=cexcol,cexRow=cexrow,symkey=F,hclustfun=function(x) hclust(x, method="ward.D2"),...)
   }
-  if(values==''){
-    celdat=as.data.frame(matrix('',nrow=nrow(dat_mat),ncol=ncol(dat_mat)))
-
+  if(values=='custom'){
+    ##  celdat==custom  ##  use psig() to convert pvalues to the above format
+    cor_heat=heatmap.2((dat_mat),cellnote=celdat,notecex=values.cex,notecol="black",breaks=seq(min,max,length=(ncols+2)),col=heat_colors,trace="none",dendrogram=dendrogram,Rowv=Rowv,Colv=Colv,margins=margin,density.info="none",keysize=1,cexCol=cexcol,cexRow=cexrow,symkey=T,hclustfun=function(x) hclust(x, method="ward.D2"),...)
   }
-    #celdat[celdat==min(celdat)]=""
 
       par(start_par)
   options(warn=0)
