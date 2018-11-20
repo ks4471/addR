@@ -1,5 +1,16 @@
-#https://github.com/RamsinghLab/ozymandias
-# People rarely do what they know to be right; they do what is convenient, then repent.. Therefore, if you want people (yourself, for example) to do the right thing, make it the most convenient thing
+
+# People rarely do what they know to be right; they do what is convenient, then repent.. Therefore, if you want people (yourself, for example) to do the right thing, make it the most convenient thing  #https://github.com/RamsinghLab/ozymandias
+
+####============================================================================================================
+##  recommended header to start all script files - includes essential options ----------------------
+#╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╔╦╦╗
+# options(stringsAsFactors=F);library(colorout);rm(list=ls());ls()#╚═╣║ ╚╣║¯\_(•_•)_/¯║╚╣╔╣╔╣║║║║╚╣
+# options(menu.graphics=F)  #═╦╩╬╝╚╬╬╚╗═╚╩╗═╩╠╬╝╔╚╗╬╚║╣══╣╦╬╬╗╠╔╗╔╣╣╝╝╣╠╔╠╚╔╔═╦╩╬╣╦╣╔╚╬╦╣╩╬╚╩╗╣╝╚╠╣
+# library('adds') #╔╦╣═╩╚╣║╔╔╣╦═║║╔╗║╔╚╔╣╩╚╚╦╣║╩╔╦║║ ╚╩╣╚╚╣║╣╚╩╔╦╩╚╦╚╩╣╬╝╚╗╔╝╬╚╝ ╔╣═╦╦╦╩╠╔╠╗╔╝╚═╗╩║
+# devtools::install_github("ks4471/addR")#╠╩╠╣╠╬═╚╬╗╩╩═║╚╝╝╣╠╗╗╠╔║╩╬╠╝╣╬╔╬╬╚╦╝╔╗╩╠╚╝╠═╝╝╦╔═╚╠╝╣║║
+#╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩╩═╝
+
+
 
 ####■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,14 +43,6 @@
 # source('~/Dropbox/PROJ/adds/adds.R') #╗╣╠═╩╠╣╠╬═╩╬╗╩╩║═╚╣╠╣╠╗╗╠╔║╩╬╠╝╣╬╔╬╬╚╦╝╔╗╩╠╚╝╠═╝╝╦╔═╚╠╝╣║ ║
 # #╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚══╩═╩╩══╩╩═╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝ ╚═╩══╩═╩══╩╝╩═╩╝╚═╩═╩╩═╝
 
-####============================================================================================================
-##   ----------------------
-#╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╗╔╦╗╔═╗╔═╦╗╔═╦═╦╦╦╦╗╔═╗╔╗═╦╗╔═╦╗╔╦╦╗
-# options(stringsAsFactors=F);library(colorout);rm(list=ls());ls()#╚═╣║ ╚╣║¯\_(•_•)_/¯║╚╣╔╣╔╣║║║║╚╣
-# options(menu.graphics=F)  #═╦╩╬╝╚╬╬╚╗═╚╩╗═╩╠╬╝╔╚╗╬╚║╣══╣╦╬╬╗╠╔╗╔╣╣╝╝╣╠╔╠╚╔╔═╦╩╬╣╦╣╔╚╬╦╣╩╬╚╩╗╣╝╚╠╣
-# library('adds') #╔╦╣═╩╚╣║╔╔╣╦═║║╔╗║╔╚╔╣╩╚╚╦╣║╩╔╦║║ ╚╩╣╚╚╣║╣╚╩╔╦╩╚╦╚╩╣╬╝╚╗╔╝╬╚╝ ╔╣═╦╦╦╩╠╔╠╗╔╝╚═╗╩║
-# devtools::install_github("ks4471/addR")#╠╩╠╣╠╬═╚╬╗╩╩═║╚╝╝╣╠╗╗╠╔║╩╬╠╝╣╬╔╬╬╚╦╝╔╗╩╠╚╝╠═╝╝╦╔═╚╠╝╣║║
-#╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩═╩╝╚═╝╩═╩╝╚═╩══╩═╩═╩═╩╝╩═╩╝╚═╩═╩╩═╝
 
 #### <*=-=*> ####
 ####■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -953,7 +956,7 @@ start_par=par()
 
 
 lmplot<-function(fit,xlab='',ylab='',dat_groups=NULL){
-'expect fit=lm(Sepal.Length ~ Petal.Width, data=iris)'
+'expected format : fit=lm(Sepal.Length ~ Petal.Width, data=iris)'
 #https://sejohnston.com/2012/08/09/a-quick-and-easy-function-to-plot-lm-results-in-r/
 Library('ggplot2')
 
@@ -985,6 +988,7 @@ Library('ggplot2')
       color=(dat_groups))
       return(gdat)
     }
+      return(gdat)
 }
 
 
@@ -1698,7 +1702,7 @@ sd.check<-function(dat_mat,check_rows=F,check_cols=T,verbose=T){
 # }
 
 
-deconv<-function(exp_mat,do_plots=F,verbose=F,mth=0.95,points=T,...){
+deconv<-function(exp_mat,do_plots=F,verbose=F,mth=0.95,points=T,ylim_dens=c(0,1),...){
 ##  https://www.r-bloggers.com/fitting-mixture-distributions-with-the-r-package-mixtools/  
   set.seed(0) ##  required for reproducibility -> in a single + limited test the gene numbers in upper and lower dont change, but not fully tested
   if(verbose){
@@ -1723,7 +1727,7 @@ if(length(mth)==1){
   lower=exp_mat[M<Mth,,drop=F]
 
   if(do_plots){
-    pdat_hist=hist(exp_mat,col='darkgrey',prob=T,...)
+    pdat_hist=hist(exp_mat,col='darkgrey',prob=T)#,...)
 #    hist(lower,col=rgb(1,0,0,0.5),breaks=max(30,100*(nrow(lower)/nrow(exp_mat))),add=T)
 #    hist(upper,col=rgb(0,0,1,0.5),breaks=max(30,100*(nrow(upper)/nrow(exp_mat))),add=T)
   # lines(density(M, na.rm=T), lty=2, lwd=2)
@@ -1792,10 +1796,10 @@ if(length(mth)==2){
 #    legend(x="topright",pch=15,box.lwd=0,box.col="white",col=c('darkgrey',rgb(1,0,0,0.5),rgb(0,0,1,0.5)),pt.bg=c('darkgrey',rgb(1,0,0,0.5),rgb(0,0,1,0.5)),legend=c(paste0('n=',nrow(exp_mat)),paste0('n=',nrow(lower)),paste0('n=',nrow(upper))),cex=1)
     legend(x="topright",pch=15,box.lwd=0,box.col="white",col=c('darkgrey','darkred','chartreuse4','dodgerblue'),pt.bg=c('darkgrey',rgb(1,0,0,0.5),rgb(0,0,1,0.5),rgb(0,1,0,0.5)),
       legend=c(
-        paste0('density n=',nrow(exp_mat),'  p.norm=',formatC(signif(pall$p.value),digits=2))
-        ,paste0('lower n=',nrow(lower),'  p.norm=',formatC(signif(plow$p.value),digits=2))
-        ,paste0('midle n=',nrow(midle),'  p.norm=',formatC(signif(pmid$p.value),digits=2))
-        ,paste0('upper n=',nrow(upper),'  p.norm=',formatC(signif(ptop$p.value),digits=2))
+        paste0('density n=',nrow(exp_mat))#,'  p.norm=',formatC(signif(pall$p.value),digits=2))
+        ,paste0('lower n=',nrow(lower))#,'  p.norm=',formatC(signif(plow$p.value),digits=2))
+        ,paste0('midle n=',nrow(midle))#,'  p.norm=',formatC(signif(pmid$p.value),digits=2))
+        ,paste0('upper n=',nrow(upper))#,'  p.norm=',formatC(signif(ptop$p.value),digits=2))
         )
 
 ,cex=1)
@@ -2204,7 +2208,7 @@ lm.mat<-function(data_mat,verbose=F,symm_fix=T){
          #### using min for factors - 1 p-value per factor ==> only interested in the lowest one
                 dummy=dummy[which(dummy[,"Pr(>|t|)"]==min(dummy[,"Pr(>|t|)"])),]    ##  not doing this risk selecting the wrong sign for Rsq below if factor
                 lmpstat[xvar,yvar]=dummy['Pr(>|t|)']
-                rsqstat[xvar,yvar]=holder$r.sq*sign(dummy['Estimate']) ## add the direction of relationship
+                rsqstat[xvar,yvar]=holder$r.sq*sign(dummy['Estimate']) ## add the direction of relationship -- sub-optimal if a factor of multiple levels
               }
             }
         }
@@ -4941,6 +4945,7 @@ linear<-function(yvar,xvar,verbose=F){
   holder=summary(tester)
   tesvp=holder$coefficients[,"Pr(>|t|)"][-1]
   tesvr=holder$coefficients[,"Estimate"][-1]
+
 ##  if adjusted R.sqared <0 => is worse than no model, sign assigned later to determine direction of "correlation"
   tesr=holder$adj.r.squared
   if(tesr<0){tesr=0}          ##  negative adjuster R squared - model is worse than no model
