@@ -195,28 +195,51 @@ colrbyg  =c("#800026","#bd0026","#e31a1c","#fc4e2a","#fd8d3c","#feb24c","#fed976
 colbw=c("#ffffff","#f0f0f0","#d9d9d9","#bdbdbd","#969696","#737373","#525252","#252525","#000000")
 
 
+# Library<-function(pkg_name='',cran=F){
+# ##  check for package existence, if not install
+# ##  only for packages on cran/bioconductor
+# 	options(menu.graphics=FALSE)
+
+# 	if(pkg_name==''){stop('no package name specified')}
+# 	if(length(pkg_name)>1){stop('one package name only')}
+	
+# 	if(!(pkg_name %in% rownames(installed.packages()))){
+# 		if(!cran){
+# 			cat('\tbioconductor install :  ',pkg_name,'\n')
+#       source("https://bioconductor.org/biocLite.R")
+# 			biocLite(pkg_name,suppressAutoUpdate=T,suppressUpdates=T)
+# 		}
+# 		if(cran){
+# 			cat('\tcran install :  ',pkg_name,'\n')
+# 			install.packages(pkg_name)
+# 		}
+# 	}
+# 	library(pkg_name,character.only=T,quietly=T)
+# }
+
+
 Library<-function(pkg_name='',cran=F){
 ##  check for package existence, if not install
 ##  only for packages on cran/bioconductor
-	options(menu.graphics=FALSE)
+    options(menu.graphics=FALSE)
 
-	if(pkg_name==''){stop('no package name specified')}
-	if(length(pkg_name)>1){stop('one package name only')}
-	
-	if(!(pkg_name %in% rownames(installed.packages()))){
-		if(!cran){
-			cat('\tbioconductor install :  ',pkg_name,'\n')
-      source("https://bioconductor.org/biocLite.R")
-			biocLite(pkg_name,suppressAutoUpdate=T,suppressUpdates=T)
-		}
-		if(cran){
-			cat('\tcran install :  ',pkg_name,'\n')
-			install.packages(pkg_name)
-		}
-	}
-	library(pkg_name,character.only=T,quietly=T)
+    if(pkg_name==''){stop('no package name specified')}
+    if(length(pkg_name)>1){stop('one package name only')}
+    
+    if(!(pkg_name %in% rownames(installed.packages()))){
+        if(!cran){
+          if (!requireNamespace("BiocManager", quietly = TRUE))
+              install.packages("BiocManager")
+
+          BiocManager::install(pkg_name)
+        }
+        if(cran){
+            cat('\tcran install :  ',pkg_name,'\n')
+            install.packages(pkg_name)
+        }
+    }
+    library(pkg_name,character.only=T,quietly=T)
 }
-
 
 
 install.dependencies<-function(){
@@ -273,6 +296,7 @@ ll<-function(...){
   list.files(...)
 }
 
+len<-function(...){return(length(...))}
 
 ###•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•###
 ###•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•##•###
